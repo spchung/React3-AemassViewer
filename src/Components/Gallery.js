@@ -6,7 +6,6 @@ import { Container, Row, Col } from 'react-bootstrap'
 import ModelCard from './ModelCard'
 //ModelInfocontext and Data 
 import ModelInfoContext from '../Contexts/ModelInfo'
-import modelJSON from '../models.json'
 
 const Styles = styled.div`
   .card-img {
@@ -15,26 +14,21 @@ const Styles = styled.div`
   }
 `;
 
-class Model {
-    constructor( name, URL, imageURL, description ) {
-        this.name = name;
-        this.URL = URL;
-        this.imageURL = imageURL;
-        this.description = description; 
-    }
-}
+// class Model {
+//     constructor( name, URL, imageURL, description ) {
+//         this.name = name;
+//         this.URL = URL;
+//         this.imageURL = imageURL;
+//         this.description = description; 
+//     }
+// }
 
 //Theoratically each ModelCard prop should take in 
 // { name, card-image, text description ,a callback model load function }
 
 const Gallery = () => {
 
-    const Model_1 = new Model('Model_1', '1 de URL', '1 de image de URL', 'This is test model number 1');
-    const Model_2 = new Model('Model_2', '2 de URL', '2 de image de URL', 'This is test model number 2')
-    const Model_3 = new Model('Model 3', '3 de URL', '3 de image de url', 'this is test model number 3 ')
-
-
-    //Documentation: 
+    // json file with model information 
     /* the Model.imageURL object is the fileName*/ 
     var ModelInformation = require('../models.json');
 

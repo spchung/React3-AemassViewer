@@ -2,11 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import { Card, Button } from 'react-bootstrap'
 
-//Import ModelInfoContext 
-import ModelInfoContext from '../Contexts/ModelInfo'
-
 //card images 
-import bird from '../assets/test/Parrot_portrait.png'
+// import bird from '../assets/test/Parrot_portrait.png'
 //components 
 import OnCallLoader from './OnCallLoader'
 
@@ -19,15 +16,16 @@ import OnCallLoader from './OnCallLoader'
 
 const ModelCard = (props) => {
 
+    // var bird  = import('../assets/test/Parrot_portrait.png');
     return (
         <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src= { require(`../assets/test/${props.Model.fileName}`) }/>
+            <Card.Img variant="top" src = { require(`../assets/test/${props.Model.fileName}`) }/>
             <Card.Body>
             <Card.Title>{ props.Model.name }</Card.Title>
                 <Card.Text>
                     { props.Model.description }
                 </Card.Text>
-            <OnCallLoader name={props.name}/>
+            <OnCallLoader modelURL={ props.Model.URL }/>
             </Card.Body>
         </Card> 
     )

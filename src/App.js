@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 //components 
 import './App.css';
 import Viewer from './Components/Viewer';
-import LandingPage from './Components/Landing /Landing'
+import LandingPage from './Components/Landing'
 import Header from './Components/Header';
 
 ///CONTEXT///

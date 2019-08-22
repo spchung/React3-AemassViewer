@@ -1,21 +1,21 @@
 {
 	"Model_0" : {
 		"name" : "Flying Parrot",
-		"URL" : "/Users/stephen/Desktop/test/ParrotS.glb",
+		"URL" : "ParrotS.glb",
 		"fileName" : "Parrot_portrait.png",
 		"description" : "My name parrot and I here to steal yo wife caw caw."
 	},
 
 	"Model_1" : {
 		"name" : "Yellow Yi-Ping",
-		"URL" : "/Users/stephen/Desktop/test/first_new.glb",
+		"URL" : "first_new.glb",
 		"fileName" : "first_new.png",
 		"description" : "Skin no nice it ceased to exist."
 	},
 
 	"Model_3" : {
 		"name" : "Yi-Ping - Colorized 2019",
-		"URL" : "/Users/stephen/Desktop/test/SK2.glb",
+		"URL" : "SK2.glb",
 		"fileName" : "SK2.png",
 		"description" : "I love me some SKII. "
 	}

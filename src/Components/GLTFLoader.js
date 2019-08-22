@@ -22,6 +22,7 @@ class GLTFLoader extends Component {
     handleFileChosen = (file) => {
         this.fileReader = new FileReader(); 
         this.fileReader.onloadend = this.handleFileRead;
+        console.log("File type : ",file);
         this.fileReader.readAsArrayBuffer(file);
     }
 
