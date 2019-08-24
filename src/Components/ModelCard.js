@@ -1,6 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Card, Button } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
+
+//Import App context 
+// import AppContext from '../Contexts/Context'
+// import ModelInfoContext from '../Contexts/ModelInfo'
 
 //card images 
 // import bird from '../assets/test/Parrot_portrait.png'
@@ -18,16 +21,20 @@ const ModelCard = (props) => {
 
     // var bird  = import('../assets/test/Parrot_portrait.png');
     return (
+        // <ModelInfoContext.Consumer> {({
+        //     Model
+        // }) =>
         <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src = { require(`../assets/test/${props.Model.fileName}`) }/>
+            <Card.Img variant="top" src = { require(`../assets/test/${ props.fileName }`) }/>
             <Card.Body>
-            <Card.Title>{ props.Model.name }</Card.Title>
+            <Card.Title>{ props.title }</Card.Title>
                 <Card.Text>
-                    { props.Model.description }
+                    { props.description }
                 </Card.Text>
-            <OnCallLoader modelURL={ props.Model.URL }/>
+            <OnCallLoader modelURL={ props.URL }/>
             </Card.Body>
         </Card> 
+        // }</ModelInfoContext.Consumer>
     )
 }
 

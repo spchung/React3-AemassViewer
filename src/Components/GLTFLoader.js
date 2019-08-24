@@ -7,11 +7,13 @@
 import React, { Component } from 'react';
 import Three_GLTFLoader from 'three-gltf-loader';
 import * as THREE from 'three';
+import { Button } from 'react-bootstrap';
 
 class GLTFLoader extends Component {
 
     handleFileRead = () => {
         const content = this.fileReader.result;
+        console.log("file reader result type", typeof(content))
         this.gltfLoader = new Three_GLTFLoader(); 
         // the second arg is a path to where gltf support files should be 
         this.gltfLoader.parse(content, '', (obj) => {
@@ -20,6 +22,7 @@ class GLTFLoader extends Component {
     }
     // will need a function that sends model information to backend 
     handleFileChosen = (file) => {
+        console.log("initial file type on input", typeof(file))
         this.fileReader = new FileReader(); 
         this.fileReader.onloadend = this.handleFileRead;
         console.log("File type : ",file);
@@ -58,6 +61,40 @@ class GLTFLoader extends Component {
         realFileButton.click();
     }
 
+    //Test Function load parrot directly
+    loadParrot = (parroturl) => {
+
+        var model = require(`../assets/test/${parroturl}`)
+
+        var gltfLoader = new Three_GLTFLoader();
+    
+        // var MODEL = gltfLoader.load(model, function (gltf) { return gltf });
+        // console.log(MODEL);
+        gltfLoader.load( model, 
+            function( gltf )
+            { 
+                // loadedModel = gltf.scene 
+
+            })
+
+        // async function createFile(){
+        //     let response = await fetch(`../assets/test/${parroturl}`);
+        //     let data = await response.blob();
+        //     let metadata = {
+        //       type: 'glb'
+        //     };
+        //     let file = new File([data], "test.glb", metadata);
+        //     // ... do something with the file or return it
+
+        //     return file;
+        //   }
+          
+        //   var loadedBlob = createFile();
+        //   this.fileReader.readAsArrayBuffer(loadedBlob);
+        //   console.log('ArraybuffResult : ', this.fileReader.result)
+
+    }
+
     //target refers to the input tag > whatever starts an event
     render(){
         return(
@@ -67,10 +104,11 @@ class GLTFLoader extends Component {
                     id="real-file"
                     accept='.glb'
                     onChange={ e => this.handleFileChosen(e.target.files[0]) } hidden="hidden"/>
-                <button 
+                <Button 
                     style={styleSheet} 
                     onClick = { this.onClickCustomButton }
-                    className="upload">Upload File</button>
+                    className="upload">Upload File</Button>
+                {/* <Button varient='primary' onClick ={ e => this.loadParrot('ParrotS.glb')}> load this parrot  </Button> */}
             </div>
         )
     }

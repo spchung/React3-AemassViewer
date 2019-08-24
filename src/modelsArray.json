@@ -1,0 +1,22 @@
+[
+    {
+      "name" : "Flying Parrot",
+      "URL" : "ParrotS.glb",
+      "fileName" : "Parrot_portrait.png",
+      "description" : "My name parrot and I here to steal yo wife caw caw."
+    },
+
+    {
+        "name" : "Yellow Yi-Ping",
+		"URL" : "first_new.glb",
+		"fileName" : "first_new.png",
+		"description" : "Skin no nice it ceased to exist."
+    },
+    {
+        "name" : "Yi-Ping - Colorized 2019",
+		"URL" : "SK2.glb",
+		"fileName" : "SK2.png",
+		"description" : "I love me some SKII. "
+     
+    }
+]

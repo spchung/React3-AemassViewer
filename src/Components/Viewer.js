@@ -7,23 +7,34 @@
 
 import React, { Component } from 'react';
 // 3rd party 
-import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import * as THREE from 'three'
+import THREE_GLTFLoader from 'three-gltf-loader'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+// import {Button} from 'react-bootstrap';
 //components 
-import GLTFLoader from './GLTFLoader';
+import GLTFLoader from './GLTFLoader'
+import Header from './Header'
+// import bird from '../assets/test/ParrotS.glb'
+import { Button } from 'react-bootstrap'
 
 class Viewer extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.state = {
             size: {
                 width: 0,
                 height: 0,
-            }
+            },
+            name: "PARROT",
         }
+        this.LOADPARROT = this.LOADPARROT.bind(this);
+
+        this.scene = new THREE.Scene();
     }
+
     
     componentDidMount(){
+
         const width = this.mount.clientWidth;
         const height = this.mount.clientHeight;
         //ADD SCENE
@@ -118,21 +129,37 @@ class Viewer extends Component {
             }
         });
     }
+
+
+    LOADPARROT = (parroturl) => {
+        var model = require(`../assets/test/${parroturl}`)
+
+        var GLTF = new THREE_GLTFLoader();
+    
+        // var MODEL = gltfLoader.load(model, function (gltf) { return gltf });
+        // console.log(MODEL);
+        GLTF.load( model, 
+            ( modelglb ) =>
+            { 
+                this.scene.add(modelglb.scene)
+
+            })
+
+    }
     
     // this.mount points the the div tags enclosing it 
     // ref= { ( mount ) => { this.mount = mount }} -> this is equivalent to React.creatRef and points to its DOM element 
     render() { 
         return(
                 <div id='ThreeJS' style={{ width: '100vw', minHeight: '100vh', position: 'fixed'}} ref ={ (content) => { this.mount = content }}>
+                    <Header/>
                     <GLTFLoader load2Scene = { this.CallBackLoadGLTF } SendAction = { this.ReceiveAction } />
+                    <Button onClick={ () => this.LOADPARROT('ParrotS.glb')}>{this.state.name}</Button>
                 </div>
         );
     }
 }
-var styleSheet ={
-    width:'500px',
-    height:'300px'
-}
+    
 
 
 // style={{ width: '100vw', minHeight: '100vh', position: 'fixed'}}

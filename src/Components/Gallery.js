@@ -7,6 +7,7 @@ import ModelCard from './ModelCard'
 //ModelInfocontext and Data 
 import ModelInfoContext from '../Contexts/ModelInfo'
 
+
 const Styles = styled.div`
   .card-img {
       height: 10rem;
@@ -30,40 +31,28 @@ const Gallery = () => {
 
     // json file with model information 
     /* the Model.imageURL object is the fileName*/ 
-    var ModelInformation = require('../models.json');
+    // var ModelInformation = require('../models.json');
 
     return (
-        // <ModelInfoContext.Provider value={ TestModelInfo }>
+        
         <Styles>
-        <Container>
-            <Row>
-                <Col>
-                    <ModelCard Model={ ModelInformation.Model_0 }/>
-                </Col>
-                <Col>
-                    <ModelCard Model={  ModelInformation.Model_1 } />
-                </Col>
-                <Col>
-                    <ModelCard Model={  ModelInformation.Model_3 }/>
-                </Col>
-            </Row>
-            {/* <br></br>
-            <Row>
-                <Col>
-                    <ModelCard Model='Model_3'/>
-                </Col>
-                <Col>
-                    <ModelCard Model='Model_4'/>
-                </Col>
-                <Col>
-                    <ModelCard Model='Model_5'/>
-                </Col>
-            </Row> */}
-        </Container>
-        </Styles>
-        // </ModelInfoContext.Provider>
+        <ModelInfoContext.Consumer>{({ models }) =>
+            <Container>
+                <Row>
+                    { models.map(item => (
+                        <Col key = {item.name}>
+                            <ModelCard 
+                            key ={ item.name } 
+                            title ={ item.name } 
+                            fileName = {item.fileName} 
+                            description ={item.description}>
+                            </ModelCard>
+                        </Col>)) }
+                </Row>
+            </Container>
+        }</ModelInfoContext.Consumer>
+        </Styles>   
     )
-
 }
 
 export default Gallery;
