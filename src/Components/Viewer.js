@@ -25,7 +25,6 @@ class Viewer extends Component {
             },
             name: "PARROT",
         }
-        this.LOADPARROT = this.LOADPARROT.bind(this);
     }
 
     componentDidMount(){

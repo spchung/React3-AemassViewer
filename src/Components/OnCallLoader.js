@@ -1,20 +1,10 @@
 /// This Functional Component 
 
 import React, { Component } from 'react';
-// import Three_GLTFLoader from 'three-gltf-loader';
-// import * as THREE from 'three';
-import GLTFLoader from 'three-gltf-loader';
-import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 //Model Context 
 import { ModelContext } from '../Contexts/ModelInfo'
-
-/// QUESTION HOW TO DO THIS IN CODE /// 
-// import parrot from '../assets/test/ParrotS.glb'
-
-//Renders the 'view' button on every single card on the main landing page 
-
 
 class OnCallLoader extends Component {
     constructor(props){
@@ -31,13 +21,12 @@ class OnCallLoader extends Component {
         modelLink.click();
     }
 
-
     render(){
         return(
         <ModelContext.Consumer>{({ models }) =>
             <React.Fragment>
                 {/* <Button variant="primary" onClick={this.handleViewerClicked() }>View</Button> */}
-               <Link className = "link" to={{
+               <Link className="link" to={{
                     pathname: '/newview',
                     state : {
                         url : `${ this.props.URL }`

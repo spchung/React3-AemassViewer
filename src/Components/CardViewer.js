@@ -1,15 +1,25 @@
 import React, { Component } from 'react';
 // 3rd party 
-import * as THREE from 'three'
-import THREE_GLTFLoader from 'three-gltf-loader'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import * as THREE from 'three';
+import THREE_GLTFLoader from 'three-gltf-loader';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { Spinner } from 'react-bootstrap';
+
+//Style
+import './CardViewer.css';
 
 // DEV note: 
 // This class works with conjunction and receives model info from the OnCallLoader Class 
 
 class CardViewer extends Component {
-    state = {
-        URL : ''
+    constructor(){
+    super();
+    this.state = {
+        URL : '',
+        LoadStatus : ''
+    }
+
+    this.LoadScreen = React.createRef();
     }
 
     componentDidMount(){
@@ -34,12 +44,6 @@ class CardViewer extends Component {
         this.ambLight = new THREE.AmbientLight( 0x404040, 3 );
         this.scene.add( this.ambLight );
 
-        //ADD CUBE
-        const geometry = new THREE.BoxGeometry(1, 1, 1);
-        const material = new THREE.MeshBasicMaterial({ color: '#433F81' });
-        this.cube = new THREE.Mesh(geometry, material);
-        this.scene.add(this.cube);
-
         //For Animation 
         this.mixers = []; 
         this.clock = new THREE.Clock();
@@ -60,7 +64,8 @@ class CardViewer extends Component {
         
     }
 
-    onClickLoader ()  {
+    onClickLoader () {
+
         if (!this.state.URL){
             console.log('no model found ');
             return; 
@@ -69,12 +74,20 @@ class CardViewer extends Component {
             console.log('model found ');
             console.log(this.state.URL);
             var modelURL = require(`../assets/test/${this.state.URL}`);
+
+           
             var GLTF = new THREE_GLTFLoader();
             GLTF.load( modelURL, 
                 ( model ) =>
                 { 
-                   this.isModelAnimated( model );
-    
+                    // this.LoadScreen.current.innerHTML = '';
+                    document.getElementById('spin').remove();
+                    this.isModelAnimated( model );
+                },
+                
+                ( xhr ) =>{
+                    console.log( xhr.loaded, xhr.total );
+                    console.log( ( (xhr.loaded / 200 ) * 100 ) + '% loaded' );
                 })
         }
     }
@@ -127,6 +140,11 @@ class CardViewer extends Component {
         this.renderer.render(this.scene, this.camera); 
     }
 
+    updateLoaderStatus = (loadstatus) =>{
+        this.setState({
+            LoadStatus : loadstatus
+        })
+    }
    
 
     updateFrame = () => {
@@ -138,8 +156,6 @@ class CardViewer extends Component {
     }
 
     animate = () => {
-        this.cube.rotation.x += 0.01;
-        this.cube.rotation.y += 0.01;
         this.renderScene();
         this.updateFrame();
         this.frameId = window.requestAnimationFrame(this.animate);
@@ -148,11 +164,18 @@ class CardViewer extends Component {
     render() {
         return (
             <div style={{ width: '100vw', minHeight: '100vh', position: 'fixed'}} ref ={ (content) => { this.mount = content }}> 
-                <div> { this.state.url } </div>    
+                <div id='spin' ref = { this.LoadScreen }>
+                    <Spinner style ={ spinnerStyle } animation="border" role="status"></Spinner>
+                </div>
             </div>
         );
     }
-
 } 
+
+const spinnerStyle = {
+    position: 'absolute',
+    right : '50%',
+    bottom : '50%'
+}
 
 export default CardViewer;

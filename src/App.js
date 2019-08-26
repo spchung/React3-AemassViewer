@@ -63,13 +63,11 @@ class App extends Component{
         <AppContext.Provider value ={ this.state }>
           <ModelContext.Provider value ={ this.state }>
             <Router>
-              {/* <Switch> */}
-                <div className='App'>
+              <Switch>
                   <Route exact path ="/" component ={ LandingPage }/>
                   <Route path ="/viewer" component ={ Viewer }/>
                   <Route path ="/newview" component= { CardViewer }/>
-                </div>
-              {/* </Switch> */}
+              </Switch>
             </Router>
           </ModelContext.Provider>
        </AppContext.Provider>
