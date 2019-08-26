@@ -3,10 +3,12 @@
 import React, { Component } from 'react';
 // import Three_GLTFLoader from 'three-gltf-loader';
 // import * as THREE from 'three';
-import GLTFLoader from 'three-gltf-loader'
-import { Button } from 'react-bootstrap'
+import GLTFLoader from 'three-gltf-loader';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+
 //Model Context 
-// import ModelInfoContext from '../Contexts/ModelInfo'
+import { ModelContext } from '../Contexts/ModelInfo'
 
 /// QUESTION HOW TO DO THIS IN CODE /// 
 // import parrot from '../assets/test/ParrotS.glb'
@@ -17,10 +19,10 @@ import { Button } from 'react-bootstrap'
 class OnCallLoader extends Component {
     constructor(props){
     super(props);
-        //use this.props.{whatever} to access information passed down from compo
-    this.state = {
-        model: '',
-    }
+        this.state = {
+            modelURL : ''
+        }
+
     //Need an event handler to handle going back to main menu 
     }
 
@@ -32,30 +34,25 @@ class OnCallLoader extends Component {
         var gltfLoader = new GLTFLoader();
         gltfLoader.load( model, 
             function( gltf ){
-                console.log(gltf.scene)
-            })
-        
-        // var fileLoader = new FileReader();
-        // var loaded = fileLoader.readAsArrayBuffer(model);
-
-
-
-        
+               this.addToScene(gltf.scene)
+            }
+        );   
     }
 
-    setStateModel(url) {
-        this.setState({
-            model : url
-        })
-    }
 
     render(){
         return(
-        
+        <ModelContext.Consumer>{({ models }) =>
             <React.Fragment>
-                <Button variant="primary" onClick={ e => this.handleViewerClicked(this.props.modelURL)}>View</Button>
+                <Button variant="primary" onClick={ e => this.handleViewerClicked( this.props.URL )}>View</Button>
+                <Link to={{
+                    pathname: '/newview',
+                    state : {
+                        url : `${ this.props.URL }`
+                    }
+                }}>TO VIEWER</Link>
             </React.Fragment>
-         
+        }</ModelContext.Consumer>
         )
     }
 }

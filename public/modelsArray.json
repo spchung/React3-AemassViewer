@@ -1,5 +1,6 @@
 [
     {
+      "id" : "0",
       "name" : "Flying Parrot",
       "URL" : "ParrotS.glb",
       "fileName" : "Parrot_portrait.png",
@@ -7,16 +8,17 @@
     },
 
     {
+      "id" : "1",
       "name" : "Yellow Yi-Ping",
 		  "URL" : "first_new.glb",
 		  "fileName" : "first_new.png",
 		  "description" : "Skin no nice it ceased to exist."
     },
     {
+      "id" : "2",
       "name" : "Yi-Ping - Colorized 2019",
 		  "URL" : "SK2.glb",
 		  "fileName" : "SK2.png",
 		  "description" : "I love me some SKII. "
-     
     }
 ]

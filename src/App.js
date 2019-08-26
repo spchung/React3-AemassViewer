@@ -1,14 +1,16 @@
 // The Final App that will be rendered, all components should end up here. 
 import React, { Component } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //components 
 import './App.css';
 import Viewer from './Components/Viewer';
-import LandingPage from './Components/Landing'
+import LandingPage from './Components/Landing';
+import NewView from './Components/ViewerTwo';
 
 ///CONTEXT///
 import AppContext from './Contexts/Context'
-import ModelInfoContext from './Contexts/ModelInfo'
+import { ModelContext } from './Contexts/ModelInfo'
 
 class App extends Component{  
   constructor(props){
@@ -19,21 +21,25 @@ class App extends Component{
       showWebGL: false,
       ShowWebGL: () => this.showWebGL(), 
       HideWebGL: () => this.hideWebGL(),
-      models : [
-        // { name: "bobby", lastName : "Lee", occupation : "comedian" },
-        // { name: "stepen", lastName : "chung", occupation: "broke ass fucker" },
-      ],
+      models : [],
     };
   }
 
   componentDidMount() {
-    
-    // place temporary place holders in /public for easy access like below 
-    axios.get('modelsArray.json').then(res => {
-      this.setState({ models : res.data });
-    })
-
+    this.fetchItems();
   }
+
+  fetchItems = async () => {
+    //creates a promise that this json file will be loaded 
+    const response = await fetch('modelsArray.json')
+    //only proceedes after response has been properly loaded 
+    const data = await response.json();
+    
+    this.setState({
+      models: data
+    })
+  }
+
   showWebGL = () =>  {
     this.setState({
       showWebGL: true,
@@ -49,35 +55,56 @@ class App extends Component{
   
   render() { 
     return(
-      // <ul>
-      //   {this.state.models.map(model => <li>{model.name}</li>)}
-      // </ul>
+      // <ModelProvider>
+      //   <TestReceive />
+      // </ModelProvider>
+
       <React.Fragment>
-        <AppContext.Provider value = { this.state }>
-          <ModelInfoContext.Provider value ={ this.state }>
-          <div>
-              <div>
-                {this.state.showWebGL ? (
-                  <div>
-                    {/* <AppContext.Provider value = { this.state }> */}
-                    <Viewer/> 
-                    {/* </AppContext.Provider> */}
+        <AppContext.Provider value ={ this.state }>
+          <ModelContext.Provider value ={ this.state }>
+            <Router>
+              {/* <Switch> */}
+                <div className='App'>
+                  <Route exact path ="/" component ={ LandingPage }/>
+                  <Route path ="/viewer" component ={ Viewer }/>
+                  <Route path ="/newview" component= { NewView }/>
                 </div>
-                ):
-                <div>
-                  {/* {this.state.Model.map(item => (
-                    <li key={item.name}>the person is { item.occupation }.</li>
-                  )) } */}
-                  {/* <AppContext.Provider value = { this.state }> */}
-                  <LandingPage /> 
-                  {/* </AppContext.Provider> */}
-                </div>
-                }
-              </div>
-          </div>
-          </ModelInfoContext.Provider>
-        </AppContext.Provider>
-      </React.Fragment>  
+              {/* </Switch> */}
+            </Router>
+          </ModelContext.Provider>
+       </AppContext.Provider>
+    </React.Fragment>  
+
+
+
+      //<Router>
+      //    <div>
+      //     <Route path='/home' component ={ Home }/>
+      //     <Route path='/shop' component ={ Shop }/>
+      //   </div>
+      // </Router>
+     
+      
+
+      // <React.Fragment>
+      //   <AppContext.Provider value ={ this.state }>
+      //     <ModelContext.Provider value ={ this.state }>
+      //     <div>
+      //         <div>
+      //           {this.state.showWebGL ? (
+      //           <div>
+      //             <Viewer/> 
+      //           </div>
+      //           ):
+      //           <div>
+      //             <LandingPage/> 
+      //           </div>
+      //           }
+      //         </div>
+      //     </div>
+      //     </ModelContext.Provider>
+      //   </AppContext.Provider>
+      // </React.Fragment>  
     );
   }
 }

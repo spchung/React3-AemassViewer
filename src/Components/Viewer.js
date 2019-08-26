@@ -28,11 +28,8 @@ class Viewer extends Component {
             name: "PARROT",
         }
         this.LOADPARROT = this.LOADPARROT.bind(this);
-
-        this.scene = new THREE.Scene();
     }
 
-    
     componentDidMount(){
 
         const width = this.mount.clientWidth;
@@ -43,7 +40,7 @@ class Viewer extends Component {
         this.camera = new THREE.PerspectiveCamera( 75, width/height, 0.1, 1000);
         this.camera.position.z = 4;
         //ADD RENDERER
-        this.renderer = new THREE.WebGLRenderer({  });
+        this.renderer = new THREE.WebGLRenderer();
         this.renderer.setClearColor('#000000');
         this.renderer.setSize(width, height);
         this.mount.appendChild(this.renderer.domElement);
@@ -119,16 +116,16 @@ class Viewer extends Component {
         this.frameId = window.requestAnimationFrame(this.animate);
     }
 
-    resizeCanvasOnChange = () => {
-        let wdth = window.clientWidth
-        let hight = window.clientHeight
-        this.setState({
-            size: {
-                width: wdth,
-                height: hight,
-            }
-        });
-    }
+    // resizeCanvasOnChange = () => {
+    //     let wdth = window.clientWidth
+    //     let hight = window.clientHeight
+    //     this.setState({
+    //         size: {
+    //             width: wdth,
+    //             height: hight,
+    //         }
+    //     });
+    // }
 
 
     LOADPARROT = (parroturl) => {
@@ -153,8 +150,8 @@ class Viewer extends Component {
         return(
                 <div id='ThreeJS' style={{ width: '100vw', minHeight: '100vh', position: 'fixed'}} ref ={ (content) => { this.mount = content }}>
                     <Header/>
-                    <GLTFLoader load2Scene = { this.CallBackLoadGLTF } SendAction = { this.ReceiveAction } />
-                    <Button onClick={ () => this.LOADPARROT('ParrotS.glb')}>{this.state.name}</Button>
+                    <GLTFLoader value = {this.props.value } load2Scene = { this.CallBackLoadGLTF } SendAction = { this.ReceiveAction } />
+                    <Button onClick={ () => this.LOADPARROT('first_new.glb')}>PARROT</Button>
                 </div>
         );
     }

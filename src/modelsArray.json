@@ -7,16 +7,16 @@
     },
 
     {
-        "name" : "Yellow Yi-Ping",
-		"URL" : "first_new.glb",
-		"fileName" : "first_new.png",
-		"description" : "Skin no nice it ceased to exist."
+      "name" : "Yellow Yi-Ping",
+      "URL" : "first_new.glb",
+      "fileName" : "first_new.png",
+      "description" : "Skin no nice it ceased to exist."
     },
     {
-        "name" : "Yi-Ping - Colorized 2019",
-		"URL" : "SK2.glb",
-		"fileName" : "SK2.png",
-		"description" : "I love me some SKII. "
+      "name" : "Yi-Ping - Colorized 2019",
+      "URL" : "SK2.glb",
+      "fileName" : "SK2.png",
+      "description" : "I love me some SKII. "
      
     }
 ]
