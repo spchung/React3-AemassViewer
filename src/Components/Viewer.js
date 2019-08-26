@@ -8,14 +8,12 @@
 import React, { Component } from 'react';
 // 3rd party 
 import * as THREE from 'three'
-import THREE_GLTFLoader from 'three-gltf-loader'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // import {Button} from 'react-bootstrap';
 //components 
 import GLTFLoader from './GLTFLoader'
 import Header from './Header'
 // import bird from '../assets/test/ParrotS.glb'
-import { Button } from 'react-bootstrap'
 
 class Viewer extends Component {
     constructor(props){
@@ -116,34 +114,6 @@ class Viewer extends Component {
         this.frameId = window.requestAnimationFrame(this.animate);
     }
 
-    // resizeCanvasOnChange = () => {
-    //     let wdth = window.clientWidth
-    //     let hight = window.clientHeight
-    //     this.setState({
-    //         size: {
-    //             width: wdth,
-    //             height: hight,
-    //         }
-    //     });
-    // }
-
-
-    LOADPARROT = (parroturl) => {
-        var model = require(`../assets/test/${parroturl}`)
-
-        var GLTF = new THREE_GLTFLoader();
-    
-        // var MODEL = gltfLoader.load(model, function (gltf) { return gltf });
-        // console.log(MODEL);
-        GLTF.load( model, 
-            ( modelglb ) =>
-            { 
-                this.scene.add(modelglb.scene)
-
-            })
-
-    }
-    
     // this.mount points the the div tags enclosing it 
     // ref= { ( mount ) => { this.mount = mount }} -> this is equivalent to React.creatRef and points to its DOM element 
     render() { 
@@ -151,7 +121,6 @@ class Viewer extends Component {
                 <div id='ThreeJS' style={{ width: '100vw', minHeight: '100vh', position: 'fixed'}} ref ={ (content) => { this.mount = content }}>
                     <Header/>
                     <GLTFLoader value = {this.props.value } load2Scene = { this.CallBackLoadGLTF } SendAction = { this.ReceiveAction } />
-                    <Button onClick={ () => this.LOADPARROT('first_new.glb')}>PARROT</Button>
                 </div>
         );
     }

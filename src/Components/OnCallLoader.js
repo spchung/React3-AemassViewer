@@ -26,17 +26,9 @@ class OnCallLoader extends Component {
     //Need an event handler to handle going back to main menu 
     }
 
-    handleViewerClicked(modelURL) {
-        // imports glb files directly with require and load trditionally 
-        var model = require(`../assets/test/${modelURL}`);
-        console.log(model);
-        
-        var gltfLoader = new GLTFLoader();
-        gltfLoader.load( model, 
-            function( gltf ){
-               this.addToScene(gltf.scene)
-            }
-        );   
+    handleViewerClicked = () => {
+        const modelLink = document.getElementById('link'); 
+        modelLink.click();
     }
 
 
@@ -44,13 +36,13 @@ class OnCallLoader extends Component {
         return(
         <ModelContext.Consumer>{({ models }) =>
             <React.Fragment>
-                <Button variant="primary" onClick={ e => this.handleViewerClicked( this.props.URL )}>View</Button>
-                <Link to={{
+                {/* <Button variant="primary" onClick={this.handleViewerClicked() }>View</Button> */}
+               <Link className = "link" to={{
                     pathname: '/newview',
                     state : {
                         url : `${ this.props.URL }`
                     }
-                }}>TO VIEWER</Link>
+                }}>View</Link>
             </React.Fragment>
         }</ModelContext.Consumer>
         )

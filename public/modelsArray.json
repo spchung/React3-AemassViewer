@@ -3,22 +3,29 @@
       "id" : "0",
       "name" : "Flying Parrot",
       "URL" : "ParrotS.glb",
-      "fileName" : "Parrot_portrait.png",
+      "fileName" : "Parrot.png",
       "description" : "My name parrot and I here to steal yo wife caw caw."
+    },
+    {
+      "id" : "1",
+      "name" : "Flamingo",
+		  "URL" : "Flamingo.glb",
+		  "fileName" : "Flamingo.png",
+		  "description" : "BAK BAAK"
     },
 
     {
-      "id" : "1",
+      "id" : "2",
       "name" : "Yellow Yi-Ping",
 		  "URL" : "first_new.glb",
-		  "fileName" : "first_new.png",
+		  "fileName" : "yellow_yi_ping.png",
 		  "description" : "Skin no nice it ceased to exist."
     },
     {
-      "id" : "2",
+      "id" : "3",
       "name" : "Yi-Ping - Colorized 2019",
 		  "URL" : "SK2.glb",
-		  "fileName" : "SK2.png",
+		  "fileName" : "SK2_pic.png",
 		  "description" : "I love me some SKII. "
     }
 ]

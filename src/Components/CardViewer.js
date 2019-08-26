@@ -7,7 +7,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // DEV note: 
 // This class works with conjunction and receives model info from the OnCallLoader Class 
 
-class NewView extends Component {
+class CardViewer extends Component {
     state = {
         URL : ''
     }
@@ -40,35 +40,13 @@ class NewView extends Component {
         this.cube = new THREE.Mesh(geometry, material);
         this.scene.add(this.cube);
 
+        //For Animation 
+        this.mixers = []; 
+        this.clock = new THREE.Clock();
+
         // this.onClickLoader();
         this.startAnimation();
         
-    }
-
-    componentWillUnmount(){
-        this.stopAnimation();
-        this.mount.removeChild(this.renderer.domElement);
-    }
-
-    startAnimation = () => {
-        if (!this.frameId) {
-            this.frameId = requestAnimationFrame(this.animate);
-        }
-    }
-
-    stopAnimation = () => { 
-        cancelAnimationFrame(this.frameId); 
-    }
-
-    animate = () => {
-        this.cube.rotation.x += 0.01;
-        this.cube.rotation.y += 0.01;
-        this.renderScene();
-        this.frameId = window.requestAnimationFrame(this.animate);
-    }
-
-    renderScene = () => { 
-        this.renderer.render(this.scene, this.camera); 
     }
 
     receiveProps(){
@@ -90,26 +68,91 @@ class NewView extends Component {
         else {
             console.log('model found ');
             console.log(this.state.URL);
-            var model = require(`../assets/test/${this.state.URL}`);
+            var modelURL = require(`../assets/test/${this.state.URL}`);
             var GLTF = new THREE_GLTFLoader();
-            GLTF.load( model, 
-                ( modelglb ) =>
+            GLTF.load( modelURL, 
+                ( model ) =>
                 { 
-                    this.scene.add(modelglb.scene);
+                   this.isModelAnimated( model );
     
                 })
         }
     }
-    
+
+    isModelAnimated = (model) => { 
+        if( model.animations.length ){
+            console.log(" found animations ");
+
+            let obj = model.scene.children[0];
+            const mixer = new THREE.AnimationMixer( obj );
+            const animations = model.animations[0];   
+
+            this.mixers.push(mixer)
+            const action = mixer.clipAction(animations);
+
+            action.play();
+        }
+        this.CallBackLoadGLTF(model.scene);
+    }
+
+    CallBackLoadGLTF = (obj_scene) => { 
+        //get model scale for repositioning model and camera 
+        let objBox = new THREE.Box3().setFromObject( obj_scene.children[0] );
+        // return objBox;
+        var sizeArray = [objBox.max.x - objBox.min.x, objBox.max.y - objBox.min.y, objBox.max.z - objBox.min.z,];
+        console.log(Math.max(...sizeArray));
+        this.camera.position.z = Math.max(...sizeArray);
+        //ADD and reposition object
+        this.scene.add(obj_scene);
+        obj_scene.position.y = -(objBox.max.y - objBox.min.y)/2;
+        this.scene.remove(this.cube);
+    }
+
+    componentWillUnmount(){
+        this.stopAnimation();
+        this.mount.removeChild(this.renderer.domElement);
+    }
+
+    startAnimation = () => {
+        if (!this.frameId) {
+            this.frameId = requestAnimationFrame(this.animate);
+        }
+    }
+
+    stopAnimation = () => { 
+        cancelAnimationFrame(this.frameId); 
+    }
+
+    renderScene = () => { 
+        this.renderer.render(this.scene, this.camera); 
+    }
+
+   
+
+    updateFrame = () => {
+        this.delta = this.clock.getDelta();
+        //Use this instead of (mixer in mixers) because react cant seem to get mixer type 
+        for (let i=0; i < this.mixers.length; i++){
+            this.mixers[i].update( this.delta );
+        }
+    }
+
+    animate = () => {
+        this.cube.rotation.x += 0.01;
+        this.cube.rotation.y += 0.01;
+        this.renderScene();
+        this.updateFrame();
+        this.frameId = window.requestAnimationFrame(this.animate);
+    }
+
     render() {
         return (
             <div style={{ width: '100vw', minHeight: '100vh', position: 'fixed'}} ref ={ (content) => { this.mount = content }}> 
                 <div> { this.state.url } </div>    
-                {/* <button onClick ={ () => { this.onClickLoader( this.state.url) }} > Load this </button> */}
             </div>
         );
     }
 
 } 
 
-export default NewView;
+export default CardViewer;

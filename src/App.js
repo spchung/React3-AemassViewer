@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Viewer from './Components/Viewer';
 import LandingPage from './Components/Landing';
-import NewView from './Components/ViewerTwo';
+import CardViewer from './Components/CardViewer';
 
 ///CONTEXT///
 import AppContext from './Contexts/Context'
@@ -67,7 +67,7 @@ class App extends Component{
                 <div className='App'>
                   <Route exact path ="/" component ={ LandingPage }/>
                   <Route path ="/viewer" component ={ Viewer }/>
-                  <Route path ="/newview" component= { NewView }/>
+                  <Route path ="/newview" component= { CardViewer }/>
                 </div>
               {/* </Switch> */}
             </Router>
