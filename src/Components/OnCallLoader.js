@@ -12,7 +12,6 @@ class OnCallLoader extends Component {
         this.state = {
             modelURL : ''
         }
-
     }
 
     handleViewerClicked = () => {

@@ -10,10 +10,10 @@ import OnCallLoader from './OnCallLoader'
 3. go into Viewer and view image */
 
 
-const ModelCard = (props) => {
+const ModelCard = ( props ) => {
 
     return (
-        <Card style={{ width: '18rem', margin : '5px' }}>
+        <Card className='shadow p-3 mb-5 bg-white rounded' style={{ width: '15rem', margin : '5px' }}>
             <Card.Img variant="top" src = { require(`../assets/test/${ props.fileName }`) }/>
             <Card.Body>
             <Card.Title> { props.title }  </Card.Title>

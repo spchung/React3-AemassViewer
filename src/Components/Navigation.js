@@ -24,7 +24,7 @@ const Styles = styled.div`
 
 const Navigation = () => (
     <Styles>
-        <Navbar expand="lg">
+        <Navbar className ='shadow p-3 mb-5 bg-gray rounded' expand="lg">
             <Navbar.Brand> AEMASS </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="basic-navbar-nav">

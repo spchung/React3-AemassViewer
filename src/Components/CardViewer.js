@@ -30,7 +30,7 @@ class CardViewer extends Component {
         //Lighting 
         this.addLights();
         //background 
-        this.loadBackGround(GreyBackground);
+        this.loadBackGround( GreyBackground );
         //For Animation 
         this.mixers = []; 
         this.clock = new THREE.Clock();
@@ -68,11 +68,14 @@ class CardViewer extends Component {
         this.scene.add( this.ambLight );
         const color = 0xFFFFFF;
         const intensity = 1;
-        const light = new THREE.DirectionalLight(color, intensity);
-        light.position.set(0, 10, 0);
-        light.target.position.set(-5, 0, 0);
-        this.scene.add(light);
-        this.scene.add(light.target);
+        const toplight = new THREE.DirectionalLight(color, intensity);
+        const bottomlight = new THREE.DirectionalLight(color, intensity/2);
+        toplight.position.set(0, 10, 0);
+        toplight.target.position.set(-5, 0, 0);
+        bottomlight.position.set(0,-10,0);
+        bottomlight.target.position.set(0,0,0);
+        this.scene.add(toplight, bottomlight);
+        this.scene.add(toplight.target, bottomlight.target);
     }
 
     loadBackGround = (url) => {
@@ -179,7 +182,6 @@ class CardViewer extends Component {
         })
     }
    
-
     updateFrame = () => {
         this.delta = this.clock.getDelta();
         //Use this instead of (mixer in mixers) because react cant seem to get mixer type 
@@ -197,9 +199,9 @@ class CardViewer extends Component {
     render() {
         return (
             <div>
-             <div id='canvas' style={ canvasStyle } ref ={ (content) => { this.mount = content }}> 
+             <div id='canvas' style={ canvasStyle } ref={ (content) => { this.mount = content }}> 
                 <div id='spin'>
-                    <Spinner style ={ spinnerStyle } animation="border" role="status"></Spinner>
+                    <Spinner style={ spinnerStyle } animation="border" role="status"></Spinner>
                 </div>
              </div>
             </div>        
@@ -222,7 +224,6 @@ const canvasStyle = {
 
     backgroundImage: `url(../assets/greyBack.png)`,
     backgroundSize: 'cover'
-
 }
 
 export default CardViewer;

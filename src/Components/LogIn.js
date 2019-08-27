@@ -37,7 +37,7 @@ class LogIn extends Component {
 
     handleChange = (event) => {
         this.setState({
-            [event.target.id] : event.target 
+            [event.target.id] : event.target.value
         }); 
     }
 
@@ -51,29 +51,29 @@ class LogIn extends Component {
                 <div className="Login">
                     <Jumbotron/>
                     <Container className='form-container shadow p-3 mb-5 bg-white rounded'>
-                        <Form onSubmit={this.handleSubmit}>
-                            <Form.Group controlId="email" bsSize="large">
+                        <Form onSubmit={ this.handleSubmit }>
+                            <Form.Group controlId="email">
                             <Form.Label>Email</Form.Label>
                                 <Form.Control
                                 autoFocus
                                 type="email"
-                                value={this.state.email}
-                                onChange={this.handleChange}
+                                value={ this.state.email }
+                                onChange={ this.handleChange }
                                 placeholder='Enter your email...'
                                 />
                             </Form.Group>
-                            <Form.Group controlId="password" bsSize="large">
+                            <Form.Group controlId="password">
                             <Form.Label>Password</Form.Label>
                                 <Form.Control
-                                value={this.state.password}
-                                onChange={this.handleChange}
+                                value={ this.state.password }
+                                onChange={ this.handleChange }
                                 type="password"
+                                placeholder='Enter your password...'
                                 />
                             </Form.Group>
                             <Button
                                 block
-                                bsSize="large"
-                                disabled={!this.validateForm()}
+                                disabled={ !this.validateForm() }
                                 type="submit">
                                 Login
                             </Button>

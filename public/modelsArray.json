@@ -1,4 +1,5 @@
-[
+  
+{"Objects" : [
     {
       "id" : "0",
       "name" : "Flying Parrot",
@@ -9,23 +10,24 @@
     {
       "id" : "1",
       "name" : "Flamingo",
-		  "URL" : "Flamingo.glb",
-		  "fileName" : "Flamingo.png",
-		  "description" : "BAK BAAK"
+      "URL" : "Flamingo.glb",
+      "fileName" : "Flamingo.png",
+      "description" : "BAK BAAK"
     },
 
     {
       "id" : "2",
       "name" : "Yellow Yi-Ping",
-		  "URL" : "first_new.glb",
-		  "fileName" : "yellow_yi_ping.png",
-		  "description" : "Skin no nice it ceased to exist."
+      "URL" : "first_new.glb",
+      "fileName" : "yellow_yi_ping.png",
+      "description" : "Skin no nice it ceased to exist."
     },
     {
       "id" : "3",
       "name" : "Yi-Ping - Colorized 2019",
-		  "URL" : "SK2.glb",
-		  "fileName" : "SK2_pic.png",
-		  "description" : "I love me some SKII. "
+      "URL" : "SK2.glb",
+      "fileName" : "SK2_pic.png",
+      "description" : "I love me some SKII. "
     }
-]
+  ]
+}

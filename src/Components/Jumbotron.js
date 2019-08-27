@@ -29,7 +29,7 @@ const Styles = styled.div`
 
 const Jumbotron = () => (
     <Styles>
-      <Jumbo fluid className="jumbo">
+      <Jumbo fluid className="jumbo shadow p-3 mb-5 bg-white rounded">
         <div className="overlay"></div>
       </Jumbo>
     </Styles>

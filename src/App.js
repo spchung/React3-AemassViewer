@@ -29,9 +29,8 @@ class App extends Component{
     const response = await fetch('modelsArray.json')
     //only proceedes after response has been properly loaded 
     const data = await response.json();
-    
     this.setState({
-      models: data
+      models: data.Objects
     })
   }
   
