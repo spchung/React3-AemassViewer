@@ -7,9 +7,8 @@ import './App.css';
 import Viewer from './Components/Viewer';
 import LandingPage from './Components/Landing';
 import CardViewer from './Components/CardViewer';
-
+import LogIn from './Components/LogIn';
 ///CONTEXT///
-import AppContext from './Contexts/Context'
 import { ModelContext } from './Contexts/ModelInfo'
 
 class App extends Component{  
@@ -17,10 +16,6 @@ class App extends Component{
     super(props);
     
     this.state = { 
-      name: 'Stevo',
-      showWebGL: false,
-      ShowWebGL: () => this.showWebGL(), 
-      HideWebGL: () => this.hideWebGL(),
       models : [],
     };
   }
@@ -39,19 +34,6 @@ class App extends Component{
       models: data
     })
   }
-
-  showWebGL = () =>  {
-    this.setState({
-      showWebGL: true,
-    })
-  }
-
-  hideWebGL = () => { 
-    this.setState({
-      showWebGL: false,
-    })
-  }
-
   
   render() { 
     return(
@@ -60,17 +42,16 @@ class App extends Component{
       // </ModelProvider>
 
       <React.Fragment>
-        <AppContext.Provider value ={ this.state }>
           <ModelContext.Provider value ={ this.state }>
             <Router>
               <Switch>
+                  <Route path ="/login" component ={ LogIn }/>
                   <Route exact path ="/" component ={ LandingPage }/>
                   <Route path ="/viewer" component ={ Viewer }/>
-                  <Route path ="/newview" component= { CardViewer }/>
+                  <Route path ="/newview" component ={ CardViewer }/>
               </Switch>
             </Router>
           </ModelContext.Provider>
-       </AppContext.Provider>
     </React.Fragment>  
 
 

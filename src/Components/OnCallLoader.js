@@ -13,7 +13,6 @@ class OnCallLoader extends Component {
             modelURL : ''
         }
 
-    //Need an event handler to handle going back to main menu 
     }
 
     handleViewerClicked = () => {
@@ -21,16 +20,13 @@ class OnCallLoader extends Component {
         modelLink.click();
     }
 
-    render(){
+    render() {
         return(
         <ModelContext.Consumer>{({ models }) =>
             <React.Fragment>
-                {/* <Button variant="primary" onClick={this.handleViewerClicked() }>View</Button> */}
                <Link className="link" to={{
                     pathname: '/newview',
-                    state : {
-                        url : `${ this.props.URL }`
-                    }
+                    state : { url : `${ this.props.URL }` }
                 }}>View</Link>
             </React.Fragment>
         }</ModelContext.Consumer>

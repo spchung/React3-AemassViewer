@@ -13,7 +13,7 @@ import OnCallLoader from './OnCallLoader'
 const ModelCard = (props) => {
 
     return (
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '18rem', margin : '5px' }}>
             <Card.Img variant="top" src = { require(`../assets/test/${ props.fileName }`) }/>
             <Card.Body>
             <Card.Title> { props.title }  </Card.Title>

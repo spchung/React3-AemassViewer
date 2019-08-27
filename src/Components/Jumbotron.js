@@ -31,10 +31,6 @@ const Jumbotron = () => (
     <Styles>
       <Jumbo fluid className="jumbo">
         <div className="overlay"></div>
-        <Container>
-          <h1 style={{color:'white'}}>Welcome</h1>
-          <p>My models bring all the boys to the yard </p>
-        </Container>
       </Jumbo>
     </Styles>
   );

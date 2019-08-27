@@ -16,10 +16,10 @@ class CardViewer extends Component {
     super();
     this.state = {
         URL : '',
-        LoadStatus : ''
     }
 
     this.LoadScreen = React.createRef();
+    this.canvasRef = React.createRef();
     }
 
     componentDidMount(){
@@ -48,9 +48,20 @@ class CardViewer extends Component {
         this.mixers = []; 
         this.clock = new THREE.Clock();
 
+        window.addEventListener( 'resize', this.onWindowResize, false );
+		
+
         // this.onClickLoader();
         this.startAnimation();
         
+        
+    }
+    //makes the webGL responsive to window size change ans should handle different devices as well
+    onWindowResize = () => {
+
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
     }
 
     receiveProps(){
@@ -64,40 +75,30 @@ class CardViewer extends Component {
         
     }
 
-    onClickLoader () {
-
-        if (!this.state.URL){
-            console.log('no model found ');
+    onClickLoader(){
+        if (!this.state.URL) {
             return; 
         }
         else {
-            console.log('model found ');
-            console.log(this.state.URL);
             var modelURL = require(`../assets/test/${this.state.URL}`);
-
-           
-            var GLTF = new THREE_GLTFLoader();
-            GLTF.load( modelURL, 
+            var GLTFLoader = new THREE_GLTFLoader();
+            GLTFLoader.load( modelURL, 
                 ( model ) =>
                 { 
                     // this.LoadScreen.current.innerHTML = '';
                     document.getElementById('spin').remove();
                     this.isModelAnimated( model );
-                },
-                
-                ( xhr ) =>{
-                    console.log( xhr.loaded, xhr.total );
-                    console.log( ( (xhr.loaded / 200 ) * 100 ) + '% loaded' );
-                })
+                }
+            )
         }
     }
 
     isModelAnimated = (model) => { 
-        if( model.animations.length ){
-            console.log(" found animations ");
+
+        if (model.animations.length){
 
             let obj = model.scene.children[0];
-            const mixer = new THREE.AnimationMixer( obj );
+            const mixer = new THREE.AnimationMixer(obj);
             const animations = model.animations[0];   
 
             this.mixers.push(mixer)
@@ -105,6 +106,7 @@ class CardViewer extends Component {
 
             action.play();
         }
+
         this.CallBackLoadGLTF(model.scene);
     }
 
@@ -116,7 +118,7 @@ class CardViewer extends Component {
         console.log(Math.max(...sizeArray));
         this.camera.position.z = Math.max(...sizeArray);
         //ADD and reposition object
-        this.scene.add(obj_scene);
+        this.scene.add( obj_scene );
         obj_scene.position.y = -(objBox.max.y - objBox.min.y)/2;
         this.scene.remove(this.cube);
     }
@@ -151,7 +153,7 @@ class CardViewer extends Component {
         this.delta = this.clock.getDelta();
         //Use this instead of (mixer in mixers) because react cant seem to get mixer type 
         for (let i=0; i < this.mixers.length; i++){
-            this.mixers[i].update( this.delta );
+            this.mixers[i].update(this.delta);
         }
     }
 
@@ -163,19 +165,30 @@ class CardViewer extends Component {
 
     render() {
         return (
-            <div style={{ width: '100vw', minHeight: '100vh', position: 'fixed'}} ref ={ (content) => { this.mount = content }}> 
-                <div id='spin' ref = { this.LoadScreen }>
+            <div>
+             <div style={ canvasStyle } ref ={ (content) => { this.mount = content }}> 
+                <div id='spin'>
                     <Spinner style ={ spinnerStyle } animation="border" role="status"></Spinner>
                 </div>
-            </div>
-        );
+             </div>
+            </div>        
+            );
     }
 } 
 
 const spinnerStyle = {
     position: 'absolute',
     right : '50%',
-    bottom : '50%'
+    bottom : '50%',
+    color : 'white'
+}
+
+const canvasStyle = {
+    width: '100%',
+    height: '100%',
+    display: 'block',
+    position: 'fixed'
+
 }
 
 export default CardViewer;

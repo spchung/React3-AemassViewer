@@ -13,6 +13,8 @@ const Styles = styled.div`
       height: 10rem;
       objectFit: cover;
   }
+
+  .
 `;
 
 // Object.defineProperty(Array.prototype, 'chunk_inefficient', {
@@ -64,14 +66,12 @@ const Gallery = () => {
             <Container>
                 {/* <MakeCards array = { models.map(items => MakeCards()) }/> */}
                 <Row>
-                    { models.map(item => (
-                    <Col key = {item.id}>
-                        <ModelCard
-                        key = { item.id } 
-                        title = { item.name } 
-                        fileName = { item.fileName } 
-                        description ={  item.description }
-                        URL = { item.URL }>
+                    { models.map( item => (
+                    <Col key = { item.id }>
+                        <ModelCard key = { item.id } title = { item.name } 
+                            fileName = { item.fileName } 
+                            description ={ item.description }
+                            URL = { item.URL }>
                         </ModelCard>
                     </Col>)) }
                 </Row>
@@ -80,5 +80,7 @@ const Gallery = () => {
         </Styles>   
     )
 }
+
+
 
 export default Gallery;
