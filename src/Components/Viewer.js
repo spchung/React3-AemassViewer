@@ -44,8 +44,7 @@ class Viewer extends Component {
         //ORBIT CONTROL 
         this.controller = new OrbitControls( this.camera, this.renderer.domElement );
         //Lighting 
-        this.ambLight = new THREE.AmbientLight( 0x404040, 3 );
-        this.scene.add( this.ambLight );
+        this.addLights();
         //ADD CUBE
         const geometry = new THREE.BoxGeometry(1, 1, 1);
         const material = new THREE.MeshBasicMaterial({ color: '#433F81' });
@@ -61,6 +60,18 @@ class Viewer extends Component {
     componentWillUnmount(){
         this.stopAnimation();
         this.mount.removeChild(this.renderer.domElement);
+    }
+
+    addLights = () => { 
+        this.ambLight = new THREE.AmbientLight( 0x404040, 3 );
+        this.scene.add( this.ambLight );
+        const color = 0xFFFFFF;
+        const intensity = 1;
+        const light = new THREE.DirectionalLight(color, intensity);
+        light.position.set(0, 10, 0);
+        light.target.position.set(-5, 0, 0);
+        this.scene.add(light);
+        this.scene.add(light.target);
     }
 
     startAnimation = () => {

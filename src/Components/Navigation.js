@@ -1,6 +1,5 @@
 //system
 import React from 'react';
-import AppContext from '../Contexts/Context';
 //style
 import { Nav, Navbar } from 'react-bootstrap';
 import styled from 'styled-components';

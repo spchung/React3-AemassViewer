@@ -5,8 +5,7 @@ import THREE_GLTFLoader from 'three-gltf-loader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Spinner } from 'react-bootstrap';
 
-//Style
-import './CardViewer.css';
+import GreyBackground from '../assets/greyBack.png'
 
 // DEV note: 
 // This class works with conjunction and receives model info from the OnCallLoader Class 
@@ -22,10 +21,32 @@ class CardViewer extends Component {
     this.canvasRef = React.createRef();
     }
 
+    //////
     componentDidMount(){
         //get props from other OnCallViewer 
         this.receiveProps();
         //Set Up Scene 
+        this.init();
+        //Lighting 
+        this.addLights();
+        //background 
+        this.loadBackGround(GreyBackground);
+        //For Animation 
+        this.mixers = []; 
+        this.clock = new THREE.Clock();
+        //Responisve design 
+        window.addEventListener( 'resize', this.onWindowResize, false );
+        // this.onClickLoader();
+        this.startAnimation();
+    }
+    componentWillUnmount(){
+        this.stopAnimation();
+        this.mount.removeChild(this.renderer.domElement);
+    }
+    ///////
+
+
+    init = () => {
         const width = this.mount.clientWidth;
         const height = this.mount.clientHeight;
         //ADD SCENE
@@ -34,28 +55,45 @@ class CardViewer extends Component {
         this.camera = new THREE.PerspectiveCamera( 75, width/height, 0.1, 1000);
         this.camera.position.z = 4;
         //ADD RENDERER
-        this.renderer = new THREE.WebGLRenderer();
+        this.renderer = new THREE.WebGLRenderer({ alpha: false });
         this.renderer.setClearColor('#000000');
         this.renderer.setSize(width, height);
         this.mount.appendChild(this.renderer.domElement);
         //ORBIT CONTROL 
         this.controller = new OrbitControls( this.camera, this.renderer.domElement );
-        //Lighting 
+    }
+
+    addLights = () => { 
         this.ambLight = new THREE.AmbientLight( 0x404040, 3 );
         this.scene.add( this.ambLight );
-
-        //For Animation 
-        this.mixers = []; 
-        this.clock = new THREE.Clock();
-
-        window.addEventListener( 'resize', this.onWindowResize, false );
-		
-
-        // this.onClickLoader();
-        this.startAnimation();
-        
-        
+        const color = 0xFFFFFF;
+        const intensity = 1;
+        const light = new THREE.DirectionalLight(color, intensity);
+        light.position.set(0, 10, 0);
+        light.target.position.set(-5, 0, 0);
+        this.scene.add(light);
+        this.scene.add(light.target);
     }
+
+    loadBackGround = (url) => {
+        var texture = new THREE.TextureLoader().load( url );
+        var backgroundMesh = new THREE.Mesh(
+            new THREE.PlaneGeometry(2, 2, 0),
+            new THREE.MeshBasicMaterial({
+                map: texture
+            }));
+
+        backgroundMesh.material.depthTest = false;
+        backgroundMesh.material.depthWrite = false;
+
+         // Create your background scene
+         this.backgroundScene = new THREE.Scene();
+         this.backgroundCamera = new THREE.Camera();
+         this.backgroundScene.add( this.backgroundCamera );
+         this.backgroundScene.add( backgroundMesh );
+    }
+
+
     //makes the webGL responsive to window size change ans should handle different devices as well
     onWindowResize = () => {
 
@@ -64,7 +102,7 @@ class CardViewer extends Component {
         this.renderer.setSize( window.innerWidth, window.innerHeight );
     }
 
-    receiveProps(){
+    receiveProps= () => {
         const { url } = this.props.location.state;
         console.log( url);
 
@@ -72,10 +110,9 @@ class CardViewer extends Component {
             console.log(this.state.URL);
             this.onClickLoader();
         });
-        
     }
 
-    onClickLoader(){
+    onClickLoader = () => {
         if (!this.state.URL) {
             return; 
         }
@@ -94,19 +131,15 @@ class CardViewer extends Component {
     }
 
     isModelAnimated = (model) => { 
-
         if (model.animations.length){
 
             let obj = model.scene.children[0];
             const mixer = new THREE.AnimationMixer(obj);
             const animations = model.animations[0];   
-
             this.mixers.push(mixer)
             const action = mixer.clipAction(animations);
-
             action.play();
         }
-
         this.CallBackLoadGLTF(model.scene);
     }
 
@@ -123,11 +156,6 @@ class CardViewer extends Component {
         this.scene.remove(this.cube);
     }
 
-    componentWillUnmount(){
-        this.stopAnimation();
-        this.mount.removeChild(this.renderer.domElement);
-    }
-
     startAnimation = () => {
         if (!this.frameId) {
             this.frameId = requestAnimationFrame(this.animate);
@@ -139,6 +167,9 @@ class CardViewer extends Component {
     }
 
     renderScene = () => { 
+        this.renderer.autoClear = false;
+        this.renderer.clear();
+        this.renderer.render( this.backgroundScene, this.backgroundCamera );
         this.renderer.render(this.scene, this.camera); 
     }
 
@@ -166,13 +197,13 @@ class CardViewer extends Component {
     render() {
         return (
             <div>
-             <div style={ canvasStyle } ref ={ (content) => { this.mount = content }}> 
+             <div id='canvas' style={ canvasStyle } ref ={ (content) => { this.mount = content }}> 
                 <div id='spin'>
                     <Spinner style ={ spinnerStyle } animation="border" role="status"></Spinner>
                 </div>
              </div>
             </div>        
-            );
+        );
     }
 } 
 
@@ -185,9 +216,12 @@ const spinnerStyle = {
 
 const canvasStyle = {
     width: '100%',
-    height: '100%',
+    height: `100%`,
     display: 'block',
-    position: 'fixed'
+    position: 'fixed',
+
+    backgroundImage: `url(../assets/greyBack.png)`,
+    backgroundSize: 'cover'
 
 }
 
