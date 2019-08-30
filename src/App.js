@@ -10,6 +10,15 @@ import CardViewer from './Components/CardViewer';
 import LogIn from './Components/LogIn';
 ///CONTEXT///
 import { ModelContext } from './Contexts/ModelInfo'
+//Amplify 
+import Amplify from 'aws-amplify';
+import aws_exports from './aws-exports';
+
+Amplify.configure(aws_exports);
+
+
+///AWS 
+// import AWS from 'aws-sdk';
 
 class App extends Component{  
   constructor(props){
@@ -22,16 +31,35 @@ class App extends Component{
 
   componentDidMount() {
     this.fetchItems();
-  }
+
+    
+  };
 
   fetchItems = async () => {
-    //creates a promise that this json file will be loaded 
-    const response = await fetch('modelsArray.json')
-    //only proceedes after response has been properly loaded 
-    const data = await response.json();
-    this.setState({
-      models: data.Objects
-    })
+    // //creates a promise that this json file will be loaded 
+    // const response = await fetch('modelsArray.json')
+    // //only proceedes after response has been properly loaded 
+    // const data = await response.json();
+    // this.setState({
+    //   models: data.Objects
+    // })
+    var AWS = require("aws-sdk");
+    var config = require("./config.json");
+    AWS.config.update(config.aws);
+    let docClient = new AWS.DynamoDB.DocumentClient();
+    var params = { TableName : "Models_info"};
+
+    docClient.scan(params, function(err, data) {
+      if (err) {
+          console.log('fetch error' + JSON.stringify(err,null,2));
+      }
+      else {
+          console.log('fetch success' + JSON.stringify(data,null,2));
+          this.setState({
+              models : data.Items
+          })
+      }
+    }.bind(this))
   }
   
   render() { 

@@ -1,0 +1,14 @@
+{
+    "node": {
+        "awscloudformation": {
+            "AuthRoleName": "react3-aemassviewer-node-20190828230937-authRole",
+            "UnauthRoleArn": "arn:aws:iam::889473725006:role/react3-aemassviewer-node-20190828230937-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::889473725006:role/react3-aemassviewer-node-20190828230937-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "react3-aemassviewer-node-20190828230937-deployment",
+            "UnauthRoleName": "react3-aemassviewer-node-20190828230937-unauthRole",
+            "StackName": "react3-aemassviewer-node-20190828230937",
+            "StackId": "arn:aws:cloudformation:us-east-1:889473725006:stack/react3-aemassviewer-node-20190828230937/daf1d760-c9a5-11e9-8947-0e243b4b1cce"
+        }
+    }
+}

@@ -10,7 +10,6 @@ const Styles = styled.div`
 * {
   box-sizing: border-box;
 }
-
 .nav {
   height: 60px;
   width: 100%;
@@ -18,11 +17,9 @@ const Styles = styled.div`
   position: relative;
   font-family: 'Quicksand', sans-serif;
 }
-
 .nav > .nav-header {
   display: inline;
 }
-
 .nav > .nav-header > .nav-title {
   display: inline-block;
   font-size: 30px;
@@ -30,14 +27,11 @@ const Styles = styled.div`
   color: #fff;
   text-shadow: 3px 3px 50px #000000;
   padding: 5px 5px 5px 5px;
-  margin: 2px 2px 2px 2px; 
-  
+  margin: 2px 2px 2px 2px;  
 }
-
 .nav > .nav-btn {
   display: none;
 }
-
 .nav > .nav-links {
   display: inline;
   float: right;
@@ -47,22 +41,18 @@ const Styles = styled.div`
   padding: 5px 5px 5px 7px;
   margin: 2px 2px 2px 0px;
 }
-
 .nav > .nav-links > a {
   display: inline-block;
   padding: 13px 10px 13px 10px;
   text-decoration: none;
   color: #efefef;
 }
-
 .nav > .nav-links > a:hover {
   background-color: rgba(0, 0, 0, 0.3);
 }
-
 .nav > #nav-check {
   display: none;
 }
-
 @media (max-width:600px) {
   .nav > .nav-btn {
     display: inline-block;
@@ -75,6 +65,7 @@ const Styles = styled.div`
     width: 50px;
     height: 50px;
     padding: 13px;
+    margin-top: 5px;
   }
   .nav > .nav-btn > label:hover,.nav  #nav-check:checked ~ .nav-btn > label {
     background-color: rgba(0, 0, 0, 0.3);
@@ -116,7 +107,7 @@ const Navigation = () => (
           <input type="checkbox" id="nav-check"/>
           <div className="nav-header">
             <div className="nav-title">
-              Aemass 
+              Aemass Viewer
             </div>
           </div>
           <div className="nav-btn">

@@ -1,0 +1,23 @@
+{
+  "INTS": [
+    {
+      "PutRequest": {
+        "Item": {
+          "value": {
+            "N": "1"
+          }
+        }
+      }
+    },
+    {
+      "PutRequest": {
+        "Item": {
+          "value": {
+            "N": "2"
+          }
+        }
+      }
+    }
+  ]
+}
+

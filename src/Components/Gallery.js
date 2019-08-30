@@ -22,18 +22,18 @@ const Gallery = () => {
     return (
         <Styles>
         <ModelContext.Consumer>{({ models }) =>
-            <Container>
-                <Row>
-                    { models.map( item => (
-                    <Col key = { item.id }>
-                        <ModelCard key = { item.id } title = { item.name } 
-                            fileName = { item.fileName } 
-                            description ={ item.description }
-                            URL = { item.URL }>
-                        </ModelCard>
-                    </Col>)) }
-                </Row>
-            </Container>
+        <Container>
+            <Row>
+                { models.map( item => (
+                <Col key = { item.id }>
+                    <ModelCard key = { item.id } title = { item.name } 
+                        fileName = { item.fileName } 
+                        description ={ item.description }
+                        URL = { item.URL }>
+                    </ModelCard>
+                </Col>)) }
+            </Row>
+        </Container>
         }</ModelContext.Consumer>
         </Styles>   
     )
