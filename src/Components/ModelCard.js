@@ -4,14 +4,10 @@ import { Card } from 'react-bootstrap'
 //comps
 import OnCallLoader from './OnCallLoader'
 //AWS
-import { Storage } from 'aws-amplify'
 // import Amplify from 'aws-amplify';
-import AWS from 'aws-sdk';
-import configs from '../config.json';
 //objectives:
 //fetch model img from s3
 
-AWS.config.update(configs);
 
 class ModelCard extends Component{
     constructor(){

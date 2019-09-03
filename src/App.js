@@ -11,13 +11,13 @@ import LogIn from './Components/LogIn';
 ///CONTEXT///
 import { ModelContext } from './Contexts/ModelInfo'
 //Amplify 
-import Amplify from 'aws-amplify';
-import aws_exports from './aws-exports';
-import AWS from 'aws-sdk';
-import configs from './config.json';
+// import Amplify from 'aws-amplify';
+// import aws_exports from './aws-exports';
+// import AWS from 'aws-sdk';
+// import configs from './config.json';
 
-AWS.config.update(configs);
-Amplify.configure(aws_exports);
+// AWS.config.update(configs);
+// Amplify.configure(aws_exports);
 
 class App extends Component{  
   constructor(props){
