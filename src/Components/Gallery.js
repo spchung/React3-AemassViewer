@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components'
 import { Container, Row, Col } from 'react-bootstrap'
 
@@ -13,11 +13,11 @@ const Styles = styled.div`
       height: 10rem;
       objectFit: cover;
   }
-
-  .
 `;
 
+
 const Gallery = () => {
+
     //procedurely generate model card according to the lenght of app.state.models and attributes
     return (
         <Styles>

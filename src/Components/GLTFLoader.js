@@ -61,40 +61,6 @@ class GLTFLoader extends Component {
         realFileButton.click();
     }
 
-    //Test Function load parrot directly
-    loadParrot = (parroturl) => {
-
-        var model = require(`../assets/test/${parroturl}`)
-
-        var gltfLoader = new Three_GLTFLoader();
-    
-        // var MODEL = gltfLoader.load(model, function (gltf) { return gltf });
-        // console.log(MODEL);
-        gltfLoader.load( model, 
-            function( gltf )
-            { 
-                // loadedModel = gltf.scene 
-
-            })
-
-        // async function createFile(){
-        //     let response = await fetch(`../assets/test/${parroturl}`);
-        //     let data = await response.blob();
-        //     let metadata = {
-        //       type: 'glb'
-        //     };
-        //     let file = new File([data], "test.glb", metadata);
-        //     // ... do something with the file or return it
-
-        //     return file;
-        //   }
-          
-        //   var loadedBlob = createFile();
-        //   this.fileReader.readAsArrayBuffer(loadedBlob);
-        //   console.log('ArraybuffResult : ', this.fileReader.result)
-
-    }
-
     //target refers to the input tag > whatever starts an event
     render(){
         return(
@@ -108,7 +74,6 @@ class GLTFLoader extends Component {
                     style={styleSheet} 
                     onClick = { this.onClickCustomButton }
                     className="upload">Upload File</Button>
-                {/* <Button varient='primary' onClick ={ e => this.loadParrot('ParrotS.glb')}> load this parrot  </Button> */}
             </div>
         )
     }

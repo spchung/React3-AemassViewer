@@ -13,61 +13,31 @@ import { ModelContext } from './Contexts/ModelInfo'
 //Amplify 
 import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
+import AWS from 'aws-sdk';
+import configs from './config.json';
 
+AWS.config.update(configs);
 Amplify.configure(aws_exports);
-
-
-///AWS 
-// import AWS from 'aws-sdk';
 
 class App extends Component{  
   constructor(props){
     super(props);
-    
     this.state = { 
       models : [],
     };
   }
 
   componentDidMount() {
-    this.fetchItems();
-
-    
+    ///INVOKE AWS LAMBDA  
+    fetch('https://5a0fp98223.execute-api.us-east-1.amazonaws.com/dev/models')
+     .then(res => res.json())
+      .then(models => this.setState({
+        models : models,
+      }))
   };
-
-  fetchItems = async () => {
-    // //creates a promise that this json file will be loaded 
-    // const response = await fetch('modelsArray.json')
-    // //only proceedes after response has been properly loaded 
-    // const data = await response.json();
-    // this.setState({
-    //   models: data.Objects
-    // })
-    var AWS = require("aws-sdk");
-    var config = require("./config.json");
-    AWS.config.update(config.aws);
-    let docClient = new AWS.DynamoDB.DocumentClient();
-    var params = { TableName : "Models_info"};
-
-    docClient.scan(params, function(err, data) {
-      if (err) {
-          console.log('fetch error' + JSON.stringify(err,null,2));
-      }
-      else {
-          console.log('fetch success' + JSON.stringify(data,null,2));
-          this.setState({
-              models : data.Items
-          })
-      }
-    }.bind(this))
-  }
   
   render() { 
     return(
-      // <ModelProvider>
-      //   <TestReceive />
-      // </ModelProvider>
-
       <React.Fragment>
           <ModelContext.Provider value ={ this.state }>
             <Router>
@@ -79,38 +49,7 @@ class App extends Component{
               </Switch>
             </Router>
           </ModelContext.Provider>
-    </React.Fragment>  
-
-
-
-      //<Router>
-      //    <div>
-      //     <Route path='/home' component ={ Home }/>
-      //     <Route path='/shop' component ={ Shop }/>
-      //   </div>
-      // </Router>
-     
-      
-
-      // <React.Fragment>
-      //   <AppContext.Provider value ={ this.state }>
-      //     <ModelContext.Provider value ={ this.state }>
-      //     <div>
-      //         <div>
-      //           {this.state.showWebGL ? (
-      //           <div>
-      //             <Viewer/> 
-      //           </div>
-      //           ):
-      //           <div>
-      //             <LandingPage/> 
-      //           </div>
-      //           }
-      //         </div>
-      //     </div>
-      //     </ModelContext.Provider>
-      //   </AppContext.Provider>
-      // </React.Fragment>  
+      </React.Fragment>   
     );
   }
 }
