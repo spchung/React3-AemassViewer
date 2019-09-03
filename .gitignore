@@ -14,7 +14,7 @@ yarn-error.log*
 .npm/
 *.glb
 lambdas/
-
+config.json
 
 #amplify
 amplify/\#current-cloud-backend
