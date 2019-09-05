@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import fs from 'fs';
+import https from 'https';
 // 3rd party 
 import * as THREE from 'three';
 import THREE_GLTFLoader from 'three-gltf-loader';
@@ -23,8 +25,9 @@ class CardViewer extends Component {
 
     //////
     componentDidMount(){
+        // this.getSK2();
         //get props from other OnCallViewer 
-        this.receiveProps();
+        // this.receiveProps();
         //Set Up Scene 
         this.init();
         //Lighting 
@@ -44,6 +47,14 @@ class CardViewer extends Component {
         this.mount.removeChild(this.renderer.domElement);
     }
     ///////
+
+
+    // getSK2 = () => {
+    //     const file = fs.createWriteStream('myglbBBB.glb');
+    //     const request = https.get(url, function(response) {
+    //         response.pipe(file);
+    //     })
+    // }
 
 
     init = () => {
@@ -120,6 +131,7 @@ class CardViewer extends Component {
             return; 
         }
         else {
+            // var modelURL = "https://aemass-viewer-data-overflow.s3.amazonaws.com/SK2.glb";
             var modelURL = require(`../assets/test/${this.state.URL}`);
             var GLTFLoader = new THREE_GLTFLoader();
             GLTFLoader.load( modelURL, 

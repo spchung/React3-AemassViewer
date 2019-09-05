@@ -1,5 +1,5 @@
 //system
-import React, { useEffect, Component} from 'react'
+import React, { Component } from 'react'
 import { Card } from 'react-bootstrap'
 //comps
 import OnCallLoader from './OnCallLoader'
@@ -29,7 +29,7 @@ class ModelCard extends Component{
             return data.body
          })
          .then(base64 => {
-            const image = `data:png;base64,${base64}`;
+            const image = `data:${base64.ContentType};base64,${base64}`;
             this.setState({
                 modelImg:image
             })
