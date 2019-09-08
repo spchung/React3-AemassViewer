@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import fs from 'fs';
-import https from 'https';
 // 3rd party 
+// import * as THREE from '../three.min.js';
+// import * as Three_GLTFLoader from '../GLTFLoader.js';
 import * as THREE from 'three';
-import THREE_GLTFLoader from 'three-gltf-loader';
+// import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+import Three_GLTFLoader from 'three-gltf-loader';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Spinner } from 'react-bootstrap';
 
 import GreyBackground from '../assets/greyBack.png'
+// import fort from '../assets/fortnite_dj/scene.gltf';
 
 // DEV note: 
 // This class works with conjunction and receives model info from the OnCallLoader Class 
@@ -27,7 +29,7 @@ class CardViewer extends Component {
     componentDidMount(){
         // this.getSK2();
         //get props from other OnCallViewer 
-        // this.receiveProps();
+        this.receiveProps();
         //Set Up Scene 
         this.init();
         //Lighting 
@@ -118,7 +120,6 @@ class CardViewer extends Component {
 
     receiveProps= () => {
         const { url } = this.props.location.state;
-        console.log( url);
 
         this.setState({ URL : url }, function(){
             console.log(this.state.URL);
@@ -126,23 +127,40 @@ class CardViewer extends Component {
         });
     }
 
-    onClickLoader = () => {
+    onClickLoader = async () => {
         if (!this.state.URL) {
             return; 
         }
         else {
-            // var modelURL = "https://aemass-viewer-data-overflow.s3.amazonaws.com/SK2.glb";
-            var modelURL = require(`../assets/test/${this.state.URL}`);
-            var GLTFLoader = new THREE_GLTFLoader();
-            GLTFLoader.load( modelURL, 
+            const local = "/Users/stephen/Desktop/fortnite_dj/scene.gltf"
+            // const modelUrl =  await this.fetchModelOnCall(this.state.URL);
+            // const modelUrl = 'https://aemass-viewer-data.s3.amazonaws.com/public/337_gms/scene.gltf?AWSAccessKeyId=AKIA46GGD6JHKJ5NG6US&Expires=1567679222&Signature=6D5P92ypz19RBCsSsynmAXRNkPQ%3D';
+            const modelUrl = 'https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf'
+            var GLTFLoader = new Three_GLTFLoader();
+            // GLTFLoader.setPath('../assets/');
+            GLTFLoader.load( modelUrl,
                 ( model ) =>
                 { 
-                    // this.LoadScreen.current.innerHTML = '';
                     document.getElementById('spin').remove();
                     this.isModelAnimated( model );
                 }
             )
         }
+    }
+
+    fetchModelOnCall = async (url) => {
+        var res = await fetch(`https://5a0fp98223.execute-api.us-east-1.amazonaws.com/dev/scenes?scene=337_gms/scene.gltf`);
+        var res1 = await res.json();
+        var res2 = await res1.body;
+        return res2;
+
+        // fetch(`https://5a0fp98223.execute-api.us-east-1.amazonaws.com/dev/scenes?scene=Parrot.glb`)
+        //  .then(res => res.json())
+        //  .then(res => res.body)
+        //  .then(res => JSON.stringify(res))
+        //  .then(res => {
+        //      console.log(res);
+        //      return res});
     }
 
     isModelAnimated = (model) => { 

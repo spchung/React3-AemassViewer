@@ -18,7 +18,6 @@ class ModelCard extends Component{
     }
 
     componentDidMount() {
-        console.log(this.props.fileName);
 
         fetch(`https://5a0fp98223.execute-api.us-east-1.amazonaws.com/dev/images?name=${this.props.fileName}`)
          .then(res=>{
@@ -36,6 +35,12 @@ class ModelCard extends Component{
          })
     
     }
+
+    // ASYNC AWAIT
+    // getData = async () => {
+    //     const response = await fetch(`https://5a0fp98223.execute-api.us-east-1.amazonaws.com/dev/images?name=${this.props.fileName}`);
+    //     response.json()
+    // }
 
     render(){
         return (
