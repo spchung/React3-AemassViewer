@@ -2,14 +2,19 @@ import React, { Component } from 'react';
 // 3rd party 
 // import * as THREE from '../three.min.js';
 // import * as Three_GLTFLoader from '../GLTFLoader.js';
-import * as THREE from 'three';
+// import * as THREE from 'three';
 // import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
-import Three_GLTFLoader from 'three-gltf-loader';
+// import Three_GLTFLoader from 'three-gltf-loader';
+
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Spinner } from 'react-bootstrap';
+import GreyBackground from '../assets/greyBack.png';
+//data
+const apis = require('./../api.json');
 
-import GreyBackground from '../assets/greyBack.png'
-// import fort from '../assets/fortnite_dj/scene.gltf';
+const THREE = window.THREE = require('three');
+require('three/examples/js/loaders/GLTFLoader');
+require('three/examples/js/loaders/NEWDracoLoader');
 
 // DEV note: 
 // This class works with conjunction and receives model info from the OnCallLoader Class 
@@ -48,16 +53,6 @@ class CardViewer extends Component {
         this.stopAnimation();
         this.mount.removeChild(this.renderer.domElement);
     }
-    ///////
-
-
-    // getSK2 = () => {
-    //     const file = fs.createWriteStream('myglbBBB.glb');
-    //     const request = https.get(url, function(response) {
-    //         response.pipe(file);
-    //     })
-    // }
-
 
     init = () => {
         const width = this.mount.clientWidth;
@@ -132,24 +127,36 @@ class CardViewer extends Component {
             return; 
         }
         else {
-            const local = "/Users/stephen/Desktop/fortnite_dj/scene.gltf"
-            // const modelUrl =  await this.fetchModelOnCall(this.state.URL);
+            // const local = "/Users/stephen/Desktop/fortnite_dj/scene.gltf"
+            let v0 = performance.now();
+            const modelUrl =  await this.fetchModelOnCall(this.state.URL);
+            let v1 = performance.now();
+            console.log("Api call took " + (v1 - v0) + " milliseconds.");
             // const modelUrl = 'https://aemass-viewer-data.s3.amazonaws.com/public/337_gms/scene.gltf?AWSAccessKeyId=AKIA46GGD6JHKJ5NG6US&Expires=1567679222&Signature=6D5P92ypz19RBCsSsynmAXRNkPQ%3D';
-            const modelUrl = 'https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf'
-            var GLTFLoader = new Three_GLTFLoader();
-            // GLTFLoader.setPath('../assets/');
+            // const modelUrl = 'https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf'
+            var GLTFLoader = new THREE.GLTFLoader();
+            var DracoLoader = new THREE.DRACOLoader();
+            DracoLoader.setDecoderPath('../dracoDecoders/');
+            GLTFLoader.setDRACOLoader(DracoLoader);
+            let v2 = performance.now();
             GLTFLoader.load( modelUrl,
                 ( model ) =>
                 { 
                     document.getElementById('spin').remove();
                     this.isModelAnimated( model );
+                    // this.scene.add(model.scene);
+                    let v5 = performance.now();
+                    console.log("loading image took "+ (v5 - v2) + " load time for model")
                 }
             )
+            let v3 = performance.now();
+            console.log("finishing the loop " + (v3 - v2) + " milliseconds");
         }
     }
 
     fetchModelOnCall = async (url) => {
-        var res = await fetch(`https://5a0fp98223.execute-api.us-east-1.amazonaws.com/dev/scenes?scene=337_gms/scene.gltf`);
+        console.log(`${apis.models}${url}`);
+        var res = await fetch(`${apis.modelScene}${url}`);
         var res1 = await res.json();
         var res2 = await res1.body;
         return res2;

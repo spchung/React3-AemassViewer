@@ -3,10 +3,8 @@ import React, { Component } from 'react'
 import { Card } from 'react-bootstrap'
 //comps
 import OnCallLoader from './OnCallLoader'
-//AWS
-// import Amplify from 'aws-amplify';
-//objectives:
-//fetch model img from s3
+//data
+const apis = require('./../api.json');
 
 
 class ModelCard extends Component{
@@ -18,13 +16,11 @@ class ModelCard extends Component{
     }
 
     componentDidMount() {
-
-        fetch(`https://5a0fp98223.execute-api.us-east-1.amazonaws.com/dev/images?name=${this.props.fileName}`)
+        fetch(`${apis.modelImage}${this.props.fileName}`)
          .then(res=>{
              return res.json()
          })
          .then(data => {
-            console.log("getting body");
             return data.body
          })
          .then(base64 => {
@@ -33,14 +29,7 @@ class ModelCard extends Component{
                 modelImg:image
             })
          })
-    
     }
-
-    // ASYNC AWAIT
-    // getData = async () => {
-    //     const response = await fetch(`https://5a0fp98223.execute-api.us-east-1.amazonaws.com/dev/images?name=${this.props.fileName}`);
-    //     response.json()
-    // }
 
     render(){
         return (

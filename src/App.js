@@ -10,30 +10,28 @@ import CardViewer from './Components/CardViewer';
 import LogIn from './Components/LogIn';
 ///CONTEXT///
 import { ModelContext } from './Contexts/ModelInfo'
-//Amplify 
-// import Amplify from 'aws-amplify';
-// import aws_exports from './aws-exports';
-// import AWS from 'aws-sdk';
-// import configs from './config.json';
-
-// AWS.config.update(configs);
-// Amplify.configure(aws_exports);
+//data
+const apis = require('./api.json');
 
 class App extends Component{  
   constructor(props){
     super(props);
     this.state = { 
       models : [],
+      access:'',
     };
   }
 
   componentDidMount() {
+    var access="png";
     ///INVOKE AWS LAMBDA  
-    fetch('https://5a0fp98223.execute-api.us-east-1.amazonaws.com/dev/models')
+    fetch(`${apis.modelInfoByAccess}${access}`)
      .then(res => res.json())
-      .then(models => this.setState({
-        models : models,
-      }))
+      .then(res => res.body)
+       .then(res => JSON.parse(res))
+        .then(models => {
+          this.setState({models : models})
+      })
   };
   
   render() { 

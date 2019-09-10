@@ -1,0 +1,24 @@
+{ 
+  "Models_Access" : [
+    {
+      "name" : "Flying Parrot",
+      "model" : "ParrotS.glb",
+      "pic" : "Parrot_portrait.png",
+      "description" : "My name parrot and I here to steal yo wife caw caw.",
+      "access"
+    },
+
+    {
+      "name" : "Yellow Yi-Ping",
+      "model" : "first_new.glb",
+      "pic" : "first_new.png",
+      "description" : "Skin no nice it ceased to exist."
+    },
+    {
+      "name" : "Yi-Ping - Colorized 2019",
+      "model" : "SK2.glb",
+      "pic" : "SK2.png",
+      "description" : "I love me some SKII. "
+    }
+  ]
+}

@@ -27,9 +27,9 @@ const Gallery = () => {
                 { models.map( item => (
                 <Col key = { item.id }>
                     <ModelCard key = { item.id } title = { item.name } 
-                        fileName = { item.fileName } 
+                        fileName = { item.pic } 
                         description ={ item.description }
-                        URL = { item.URL }>
+                        URL = { item.model }>
                     </ModelCard>
                 </Col>)) }
             </Row>

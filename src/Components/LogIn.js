@@ -16,23 +16,29 @@ const Styles = styled.div`
       background-color: #64b5f6;
       padding: 15px; 
       max-width: 320px;
-     
-      
   }
-
 `;
 
 class LogIn extends Component {
     constructor(props) {
         super(props); 
         this.state = {
-            email: '',
+            username: '',
             password: '' 
         }
     }
 
+    // formData: {}, // Contains login form data
+    // errors: {}, // Contains login field errors
+    // formSubmitted: false, // Indicates submit status of login form
+    // loading: false // Indicates in progress state of login form
+
     handleSubmit = (event) => {
         event.preventDefault();
+        let form = event.target;
+        // let mail = form.
+        console.log(form);
+        console.log(form.elements.title)
     }
 
     handleChange = (event) => {
@@ -42,7 +48,7 @@ class LogIn extends Component {
     }
 
     validateForm() {
-        return this.state.email.length > 0 && this.state.password.length > 0;
+        return this.state.username.length > 0 && this.state.password.length > 0;
     }
 
     render(){
@@ -52,14 +58,14 @@ class LogIn extends Component {
                     <Jumbotron/>
                     <Container className='form-container shadow p-3 mb-5 bg-white rounded'>
                         <Form onSubmit={ this.handleSubmit }>
-                            <Form.Group controlId="email">
-                            <Form.Label>Email</Form.Label>
+                            <Form.Group controlId="username">
+                            <Form.Label>User Name</Form.Label>
                                 <Form.Control
                                 autoFocus
-                                type="email"
-                                value={ this.state.email }
+                                type="username"
+                                value={ this.state.username }
                                 onChange={ this.handleChange }
-                                placeholder='Enter your email...'
+                                placeholder='Enter your user name...'
                                 />
                             </Form.Group>
                             <Form.Group controlId="password">
