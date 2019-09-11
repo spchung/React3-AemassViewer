@@ -7,14 +7,12 @@ import ModelCard from './ModelCard'
 //ModelInfocontext and Data 
 import { ModelContext } from '../Contexts/ModelInfo'
 
-
 const Styles = styled.div`
   .card-img {
       height: 10rem;
       objectFit: cover;
   }
 `;
-
 
 const Gallery = () => {
 

@@ -119,8 +119,8 @@ const Navigation = () => (
           </div>
           <div className="nav-links">
             <Link to="/">Home</Link>
-            <Link to="#">Gallery</Link>
             <Link to="/viewer">CustomViewer</Link>
+            <Link to="/login">Sign In </Link>
           </div>
         </div>
     </Styles>

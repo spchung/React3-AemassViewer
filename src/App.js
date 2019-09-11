@@ -23,7 +23,7 @@ class App extends Component{
   }
 
   componentDidMount() {
-    var access="png";
+    var access="bird";
     ///INVOKE AWS LAMBDA  
     fetch(`${apis.modelInfoByAccess}${access}`)
      .then(res => res.json())

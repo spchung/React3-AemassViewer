@@ -104,7 +104,6 @@ class CardViewer extends Component {
          this.backgroundScene.add( backgroundMesh );
     }
 
-
     //makes the webGL responsive to window size change ans should handle different devices as well
     onWindowResize = () => {
 

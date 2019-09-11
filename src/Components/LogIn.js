@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Button, Form, Container  } from "react-bootstrap";
+import { Button, Form, Container, Row} from "react-bootstrap";
 import styled from 'styled-components';
 
 //components 
-import Jumbotron from './Jumbotron'
+import Header from './Header';
 
+const apis = require('./../api.json');
 
 const Styles = styled.div`
   .Login form {
@@ -16,7 +17,7 @@ const Styles = styled.div`
       background-color: #64b5f6;
       padding: 15px; 
       max-width: 320px;
-  }
+    }
 `;
 
 class LogIn extends Component {
@@ -24,7 +25,8 @@ class LogIn extends Component {
         super(props); 
         this.state = {
             username: '',
-            password: '' 
+            password: '',
+            access:''
         }
     }
 
@@ -33,12 +35,28 @@ class LogIn extends Component {
     // formSubmitted: false, // Indicates submit status of login form
     // loading: false // Indicates in progress state of login form
 
-    handleSubmit = (event) => {
+    getAccess = async (userObj) =>{
+        let username = await userObj.username;
+        let password = await userObj.password;
+        let result;
+        await fetch(`${apis.getAccessLevel}username=${username}&password=${password}`)
+         .then(res => res.json())
+         .then(data => { result = data.body });
+
+        return result;
+    }
+
+    handleSubmit = async (event) => {
         event.preventDefault();
-        let form = event.target;
-        // let mail = form.
-        console.log(form);
-        console.log(form.elements.title)
+        //API goes here 
+       let accessLevel = await this.getAccess(this.state);
+       console.log(accessLevel);
+
+        //if good 
+            //load back into home with access level 
+        
+        //else
+            //API returns bad message 
     }
 
     handleChange = (event) => {
@@ -55,11 +73,15 @@ class LogIn extends Component {
         return (
             <Styles>
                 <div className="Login">
-                    <Jumbotron/>
+                    <Header/>
+                    {/* should look into how to center Container instead of stuffing row before it  */}
+                    <Row className='mb-5'></Row>
+                    <Row className='mb-5'></Row>
+                    <Row className='sm-5'></Row>
                     <Container className='form-container shadow p-3 mb-5 bg-white rounded'>
                         <Form onSubmit={ this.handleSubmit }>
                             <Form.Group controlId="username">
-                            <Form.Label>User Name</Form.Label>
+                            <Form.Label>Username</Form.Label>
                                 <Form.Control
                                 autoFocus
                                 type="username"
