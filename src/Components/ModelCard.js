@@ -34,7 +34,6 @@ class ModelCard extends Component{
     render(){
         return (
             <Card className='shadow p-3 mb-5 bg-white rounded' style={{ width: '15rem', margin : '5px' }}>
-                {/* <Card.Img variant="top" src = { require(`../assets/test/${ this.props.fileName }`) }/> */}
                 <Card.Img variant="top" src={this.state.modelImg}/>
                 <Card.Body>
                 <Card.Title> { this.props.title } </Card.Title>

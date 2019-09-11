@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Button, Form, Container, Row} from "react-bootstrap";
+import { Button, Form, Container, Row, Alert} from "react-bootstrap";
 import styled from 'styled-components';
 
 //components 
-import Header from './Header';
+import LoginNav from './LoginNav';
 
 const apis = require('./../api.json');
 
@@ -18,6 +18,14 @@ const Styles = styled.div`
       padding: 15px; 
       max-width: 320px;
     }
+
+  .warning{
+    max-width: 500px;
+    text-align: center;
+    margin:auto;
+    
+    
+  }
 `;
 
 class LogIn extends Component {
@@ -26,14 +34,10 @@ class LogIn extends Component {
         this.state = {
             username: '',
             password: '',
-            access:''
+            access:'' 
         }
     }
-
-    // formData: {}, // Contains login form data
-    // errors: {}, // Contains login field errors
-    // formSubmitted: false, // Indicates submit status of login form
-    // loading: false // Indicates in progress state of login form
+    
 
     getAccess = async (userObj) =>{
         let username = await userObj.username;
@@ -42,22 +46,56 @@ class LogIn extends Component {
         await fetch(`${apis.getAccessLevel}username=${username}&password=${password}`)
          .then(res => res.json())
          .then(data => { result = data.body });
-
         return result;
+    }
+
+    continueAsGuest = () => {
+        this.props.history.push({
+            pathname: '/landing',
+            state: {
+                access: 'noAccess'
+            }
+        })
     }
 
     handleSubmit = async (event) => {
         event.preventDefault();
         //API goes here 
        let accessLevel = await this.getAccess(this.state);
-       console.log(accessLevel);
+       this.handleUnauthorizedUser(accessLevel);
+    //    this.setState({
+    //        access: accessLevel
+    //    });
+       //handle unAuth
+    //    this.handleUnauthorizedUser(this.state.accessLevel);
 
-        //if good 
-            //load back into home with access level 
-        
-        //else
-            //API returns bad message 
+    //    this.props.history.push({
+    //        pathname: '/landing',
+    //        state: {
+    //            access: this.state.access
+    //         }
+    //     })
     }
+
+    handleUnauthorizedUser = (accessLevel) => {
+        if (accessLevel === 'unAuthorized'){
+            let warningBox =document.getElementById('warning');
+            warningBox.hidden = false;
+            // warningBox.innerHTML = warning;
+        }else{
+            this.setState({
+                access: accessLevel
+            });
+
+            this.props.history.push({
+                pathname: '/landing',
+                state: {
+                    access: this.state.access
+                 }
+             })
+        }
+    }
+
 
     handleChange = (event) => {
         this.setState({
@@ -70,10 +108,11 @@ class LogIn extends Component {
     }
 
     render(){
+        let warning = 'Unauthorized username or password, please sign in as guest or contact us';
         return (
             <Styles>
                 <div className="Login">
-                    <Header/>
+                    <LoginNav/>
                     {/* should look into how to center Container instead of stuffing row before it  */}
                     <Row className='mb-5'></Row>
                     <Row className='mb-5'></Row>
@@ -99,14 +138,26 @@ class LogIn extends Component {
                                 placeholder='Enter your password...'
                                 />
                             </Form.Group>
-                            <Button
-                                block
+                            <Button block
                                 disabled={ !this.validateForm() }
                                 type="submit">
                                 Login
                             </Button>
+                            <Button block onClick={this.continueAsGuest}>
+                                continue as guest 
+                            </Button>
+                            {/* <Link className="link" onClick={this.logClick} to={{
+                                pathname: '/',
+                                state : { 
+                                    userAccess : `${ this.state.access }`,
+                                }
+                            }}>to main</Link> */}
                         </Form>
                     </Container>
+                    {/* <Container className='shadow p-3 mb-5 bg-white rounded' 
+                    id='warning' hidden='hidden'> */}
+                        <Alert className ='warning' id='warning' hidden='hidden' variant='danger'> {warning} </Alert>
+                    {/* </Container> */}
                 </div>
             </Styles>
         )

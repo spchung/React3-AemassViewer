@@ -21,6 +21,7 @@ const Gallery = () => {
         <Styles>
         <ModelContext.Consumer>{({ models }) =>
         <Container>
+            {/* <div>{data[0].id}</div> */}
             <Row>
                 { models.map( item => (
                 <Col key = { item.id }>

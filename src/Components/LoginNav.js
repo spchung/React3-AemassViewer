@@ -101,9 +101,8 @@ const Styles = styled.div`
 }
 `;
 
-const Navigation = (props) => {
-  var signInOrOut = (props.accessLevel === 'noAccess')? 'Sign In' : "Sign Out";
-  return(
+const LoginNav = () => {
+  return( 
     <Styles>
         <div className="nav">
           <input type="checkbox" id="nav-check"/>
@@ -116,16 +115,17 @@ const Navigation = (props) => {
             <label htmlFor="nav-check">
               <span></span>
               <span></span>
-              <span></span>
             </label>
           </div>
           <div className="nav-links">
-            <Link to="/landing">Home</Link>
-            {/* <Link to="/viewer">CustomViewer</Link> */}
-            <Link to="/">{signInOrOut}</Link>
+            <Link to={{
+              pathname:'/landing',
+              state: { access: 'noAccess' }
+            }}>Log In As Guest</Link>
+            <Link to="/">Sign In</Link>
           </div>
         </div>
     </Styles>
 )}
 
-export default Navigation;
+export default LoginNav;

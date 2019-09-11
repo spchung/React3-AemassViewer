@@ -14,10 +14,10 @@ class OnCallLoader extends Component {
         }
     }
 
-    handleViewerClicked = () => {
-        const modelLink = document.getElementById('link'); 
-        modelLink.click();
-    }
+    // handleViewerClicked = () => {
+    //     const modelLink = document.getElementById('link'); 
+    //     modelLink.click();
+    // }
 
     render() {
         return(
