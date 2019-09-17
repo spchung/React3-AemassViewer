@@ -1,11 +1,4 @@
 import React, { Component } from 'react';
-// 3rd party 
-// import * as THREE from '../three.min.js';
-// import * as Three_GLTFLoader from '../GLTFLoader.js';
-// import * as THREE from 'three';
-// import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
-// import Three_GLTFLoader from 'three-gltf-loader';
-
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { Spinner } from 'react-bootstrap';
 import GreyBackground from '../assets/greyBack.png';
@@ -32,7 +25,6 @@ class CardViewer extends Component {
 
     //////
     componentDidMount(){
-        // this.getSK2();
         //get props from other OnCallViewer 
         this.receiveProps();
         //Set Up Scene 
@@ -40,7 +32,7 @@ class CardViewer extends Component {
         //Lighting 
         this.addLights();
         //background 
-        this.loadBackGround( GreyBackground );
+        this.loadBackground( GreyBackground );
         //For Animation 
         this.mixers = []; 
         this.clock = new THREE.Clock();
@@ -86,7 +78,7 @@ class CardViewer extends Component {
         this.scene.add(toplight.target, bottomlight.target);
     }
 
-    loadBackGround = (url) => {
+    loadBackground = (url) => {
         var texture = new THREE.TextureLoader().load( url );
         var backgroundMesh = new THREE.Mesh(
             new THREE.PlaneGeometry(2, 2, 0),
@@ -106,7 +98,6 @@ class CardViewer extends Component {
 
     //makes the webGL responsive to window size change ans should handle different devices as well
     onWindowResize = () => {
-
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize( window.innerWidth, window.innerHeight );
@@ -126,47 +117,27 @@ class CardViewer extends Component {
             return; 
         }
         else {
-            // const local = "/Users/stephen/Desktop/fortnite_dj/scene.gltf"
-            let v0 = performance.now();
-            const modelUrl =  await this.fetchModelOnCall(this.state.URL);
-            let v1 = performance.now();
-            console.log("Api call took " + (v1 - v0) + " milliseconds.");
-            // const modelUrl = 'https://aemass-viewer-data.s3.amazonaws.com/public/337_gms/scene.gltf?AWSAccessKeyId=AKIA46GGD6JHKJ5NG6US&Expires=1567679222&Signature=6D5P92ypz19RBCsSsynmAXRNkPQ%3D';
-            // const modelUrl = 'https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf'
+            const modelUrl = await this.fetchModelOnCall(this.state.URL);
             var GLTFLoader = new THREE.GLTFLoader();
             var DracoLoader = new THREE.DRACOLoader();
             DracoLoader.setDecoderPath('../dracoDecoders/');
             GLTFLoader.setDRACOLoader(DracoLoader);
-            let v2 = performance.now();
             GLTFLoader.load( modelUrl,
                 ( model ) =>
                 { 
                     document.getElementById('spin').remove();
                     this.isModelAnimated( model );
-                    // this.scene.add(model.scene);
-                    let v5 = performance.now();
-                    console.log("loading image took "+ (v5 - v2) + " load time for model")
                 }
             )
-            let v3 = performance.now();
-            console.log("finishing the loop " + (v3 - v2) + " milliseconds");
         }
     }
 
+    //超奇怪 
     fetchModelOnCall = async (url) => {
-        console.log(`${apis.models}${url}`);
-        var res = await fetch(`${apis.modelScene}${url}`);
-        var res1 = await res.json();
-        var res2 = await res1.body;
+        let res = await fetch(`${apis.modelScene}${url}`);
+        let res1 = await res.json();
+        let res2 = await res1.body;
         return res2;
-
-        // fetch(`https://5a0fp98223.execute-api.us-east-1.amazonaws.com/dev/scenes?scene=Parrot.glb`)
-        //  .then(res => res.json())
-        //  .then(res => res.body)
-        //  .then(res => JSON.stringify(res))
-        //  .then(res => {
-        //      console.log(res);
-        //      return res});
     }
 
     isModelAnimated = (model) => { 

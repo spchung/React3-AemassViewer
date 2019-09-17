@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "aws-amplify": "^1.1.36",
-    "aws-amplify-react": "^2.3.12",
-    "aws-sdk": "^2.518.0",
     "bootstrap": "^4.3.1",
     "core-js": "^3.2.1",
     "react": "^16.9.0",
@@ -15,7 +12,6 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
     "react-three": "^0.9.7",
-    "serve": "^11.1.0",
     "styled-components": "^4.3.2",
     "three": "^0.107.0",
     "three-gltf-loader": "^1.108.0"
@@ -40,5 +36,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "history": "^4.10.1"
   }
 }

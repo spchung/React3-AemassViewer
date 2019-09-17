@@ -5,9 +5,8 @@
       "model" : "ParrotS.glb",
       "pic" : "Parrot_portrait.png",
       "description" : "My name parrot and I here to steal yo wife caw caw.",
-      "access"
+      "access":"lol"
     },
-
     {
       "name" : "Yellow Yi-Ping",
       "model" : "first_new.glb",

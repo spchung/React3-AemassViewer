@@ -17,18 +17,11 @@ class ModelCard extends Component{
 
     componentDidMount() {
         fetch(`${apis.modelImage}${this.props.fileName}`)
-         .then(res=>{
-             return res.json()
-         })
-         .then(data => {
-            return data.body
-         })
-         .then(base64 => {
-            const image = `data:${base64.ContentType};base64,${base64}`;
-            this.setState({
-                modelImg:image
-            })
-         })
+         .then(res => res.json())
+         .then(res => res.body)
+         .then(res => this.setState({
+             modelImg:res
+         }));
     }
 
     render(){

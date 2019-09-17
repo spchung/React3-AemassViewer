@@ -1,27 +1,37 @@
-// The Final App that will be rendered, all components should end up here. 
-import React from 'react';
+import React, { Component } from 'react';
 // import axios from 'axios';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 //components 
-import './App.css';
-import Viewer from './Components/Viewer';
 import LandingPage from './Components/Landing';
 import CardViewer from './Components/CardViewer';
 import LogIn from './Components/LogIn';
 
-const App = function(){
-  return(
-    <React.Fragment>
-        <Router>
-          <Switch>
-              <Route exact path ="/" component ={ LogIn }/>
-              <Route path ="/landing" component ={ LandingPage }/>
-              <Route path ="/viewer" component ={ Viewer }/>
-              <Route path ="/newview" component ={ CardViewer }/>
-          </Switch>
-        </Router>
-    </React.Fragment>   
-  );
+class App extends Component{
+  state={
+    loggedIn : false
+  }
+  componentDidMount(){
+    this.localStorage = window.localStorage; 
+    this.status = this.checkSignInStatus('isSignIn');
+  }
+
+  checkSignInStatus(localStorageKey){
+    let val = this.localStorage.getItem(localStorageKey);
+    if (val === 'true') return true;
+    else return false;
+  }
+
+  render(){
+    return(
+      <React.Fragment>
+        <Switch>
+          <Route exact path ="/" component ={ LogIn }/>
+          <Route path ="/landing" component ={ LandingPage }/>
+          <Route path ="/newview" component ={ CardViewer }/>
+        </Switch>
+      </React.Fragment>   
+    )
+  };
 }
 export default App; 
 

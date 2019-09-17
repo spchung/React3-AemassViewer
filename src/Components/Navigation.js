@@ -1,11 +1,75 @@
 //system
-import React from 'react';
+import React, {Component} from 'react';
 //font
 import '../App.css'
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-// anything inside of backticks `` are interpurted as string in JS ES6 
+class Navigation extends Component{
+  constructor(props){
+    super(props);
+
+    this.isLoggedIn = 'Sign Out'
+    this.localStorage = window.localStorage;
+  }
+  componentDidMount(){
+    this.localStorage=window.localStorage;
+    this.isLoggedIn = this.checkSignInStatus('isSignIn');
+  }
+
+  checkSignInStatus(localStorageKey){
+    let val = this.localStorage.getItem(localStorageKey);
+    if (val === 'true') return 'Sign Out';
+    else return 'Sign In';
+  }
+
+  redirectToLogIn(){
+    let btn = document.getElementById('linkbtn');
+    btn.click();
+  }
+
+  switchLogIn(){
+    let localStorage=window.localStorage;
+    let val = localStorage.getItem('isSignIn');
+    if (val === 'true'){
+      localStorage.setItem('isSignIn','false')
+    }
+    else {
+      localStorage.setItem('isSignIn','true')
+    }
+    let btn = document.getElementById('linkbtn');
+    btn.click();
+  }
+
+  render(){
+    return(
+      <Styles>
+          <div className="nav">
+            <input type="checkbox" id="nav-check"/>
+            <div className="nav-header">
+              <div className="nav-title">
+                Aemass Viewer
+              </div>
+            </div>
+            <div className="nav-btn">
+              <label htmlFor="nav-check">
+                <span></span>
+                <span></span>
+                <span></span>
+              </label>
+            </div>
+            <div className="nav-links">
+              <Link to="/landing">Home</Link>
+              <Link hidden={true} id='linkbtn' onClick={this.redirectToLogIn} className="signInbtn" to="/"></Link>
+              <button id='logbtn' onClick={this.switchLogIn}>{this.isLoggedIn}</button>
+            </div>
+          </div>
+      </Styles>
+    )}
+}
+
+export default Navigation;
+
 const Styles = styled.div`
 * {
   box-sizing: border-box;
@@ -100,32 +164,3 @@ const Styles = styled.div`
   }
 }
 `;
-
-const Navigation = (props) => {
-  var signInOrOut = (props.accessLevel === 'noAccess')? 'Sign In' : "Sign Out";
-  return(
-    <Styles>
-        <div className="nav">
-          <input type="checkbox" id="nav-check"/>
-          <div className="nav-header">
-            <div className="nav-title">
-              Aemass Viewer
-            </div>
-          </div>
-          <div className="nav-btn">
-            <label htmlFor="nav-check">
-              <span></span>
-              <span></span>
-              <span></span>
-            </label>
-          </div>
-          <div className="nav-links">
-            <Link to="/landing">Home</Link>
-            {/* <Link to="/viewer">CustomViewer</Link> */}
-            <Link to="/">{signInOrOut}</Link>
-          </div>
-        </div>
-    </Styles>
-)}
-
-export default Navigation;

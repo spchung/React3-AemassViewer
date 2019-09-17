@@ -122,7 +122,6 @@ const LoginNav = () => {
               pathname:'/landing',
               state: { access: 'noAccess' }
             }}>Log In As Guest</Link>
-            <Link to="/">Sign In</Link>
           </div>
         </div>
     </Styles>

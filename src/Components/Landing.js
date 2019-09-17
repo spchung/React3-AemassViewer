@@ -1,22 +1,36 @@
 //system 
-import React,{Component}from 'react'
-import Jumbotron from './Jumbotron'
-import Gallery from './Gallery'
-import Navigation from './Navigation'
+import React,{Component}from 'react';
+import Jumbotron from './Jumbotron';
+import Gallery from './Gallery';
+import Navigation from './Navigation';
 //import context 
-import { ModelContext } from './../Contexts/ModelInfo'
+import { ModelContext } from './../Contexts/ModelInfo';
+import { Redirect } from 'react-router-dom';
+
+//Explain this.props.location.state.access
+
 const apis = require('./../api.json');
 
 class LandingPage extends Component{
-    state={
-        models: [],
-        currUserAccess:'noAccess'
+    constructor(){
+        super();
+        this.state={
+            models: [],
+            currUserAccess:'noAccess'
+        }
+        this.localStorage=window.localStorage;
+        this.loggedIn = JSON.parse(this.localStorage.getItem('isSignIn'));
     }
+
+    checkSignInStatus(localStorageKey){
+        let val = this.localStorage.getItem(localStorageKey);
+        if (val === 'true') return true;
+        else return false;
+    }
+
     componentDidMount(){
-        var access="bird";
-        access = this.receiveProps();
-        ///INVOKE AWS LAMBDA  
-        fetch(`${apis.modelInfoByAccess}${access}`)
+        ///API Call
+        fetch(`${apis.modelInfoByAccess}${this.props.location.state.access}`)
         .then(res => res.json())
         .then(res => res.body)
         .then(res => JSON.parse(res))
@@ -27,23 +41,23 @@ class LandingPage extends Component{
         })
     }
 
-    receiveProps = () => {
-        this.setState({
-            currUserAccess: this.props.location.state.access
-        })
-        return this.props.location.state.access
-    }
-
     render(){
-        return(
-            <div>
-             <ModelContext.Provider value ={this.state}>
-                 <Navigation accessLevel = {this.state.currUserAccess}/>
-                 <Jumbotron/>   
-                 <Gallery/>
-             </ModelContext.Provider>
-         </div>
-        )
+        if (this.loggedIn === true){
+            return(
+                <div> 
+                    <ModelContext.Provider value ={this.state}>
+                        <Navigation accessLevel = 'png'/>
+                        <Jumbotron/>   
+                        <Gallery/>
+                    </ModelContext.Provider>
+                </div>
+            )
+        }
+        else {
+            return(
+                <Redirect to='/'/>
+            )
+        }
     }
 }
 

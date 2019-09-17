@@ -12,7 +12,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 // import {Button} from 'react-bootstrap';
 //components 
 import GLTFLoader from './GLTFLoader'
-import Header from './Header'
 // import bird from '../assets/test/ParrotS.glb'
 
 class Viewer extends Component {
@@ -129,22 +128,12 @@ class Viewer extends Component {
     render() { 
         return(
                 <div id='ThreeJS' style={{ width: '100vw', minHeight: '100vh', position: 'fixed'}} ref ={ (content) => { this.mount = content }}>
-                    <Header/>
                     <GLTFLoader value = {this.props.value } load2Scene = { this.CallBackLoadGLTF } SendAction = { this.ReceiveAction } />
                 </div>
         );
     }
 }
-    
 
-
-// style={{ width: '100vw', minHeight: '100vh', position: 'fixed'}}
-// style={{height:'auto',overflow:'scroll',maxHeight:'200px'}}
 export default Viewer; 
 
-//Additional Optional Method 
-//same as using ref ={ (content) => { this.mount = content }, pass ref = {this.setMount} in 
-    // setMount = ( mount ) => {
-    //   this.mount = mount;
-    // }
     

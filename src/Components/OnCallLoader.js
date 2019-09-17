@@ -14,11 +14,6 @@ class OnCallLoader extends Component {
         }
     }
 
-    // handleViewerClicked = () => {
-    //     const modelLink = document.getElementById('link'); 
-    //     modelLink.click();
-    // }
-
     render() {
         return(
         <ModelContext.Consumer>{({ models }) =>
@@ -32,23 +27,5 @@ class OnCallLoader extends Component {
         )
     }
 }
-
-// `'${ this.props.modelURL }'`
-
-///////////
-////THIS MIGHT COME IN HANDY LATER 
-// var request = new XMLHttpRequest();
-// request.open('GET', MY_URL, true);
-// request.responseType = 'blob';
-// request.onload = function() {
-//     var reader = new FileReader();
-//     reader.readAsDataURL(request.response);
-//     reader.onload =  function(e){
-//         console.log('DataURL:', e.target.result);
-//     };
-// };
-// request.send();
-
-
 
 export default OnCallLoader;
