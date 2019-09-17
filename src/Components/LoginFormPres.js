@@ -1,13 +1,9 @@
+// Simple presentational component for LogIn - 單純拿來裝LogIn.js算好的東西
 import React from 'react';
 import { Button, Form, Container, Row, Alert} from "react-bootstrap";
 import styled from 'styled-components';
 
-//represents the html and CSS of the Login Component, 
-//while Login.js will handle all events and functional part.
-// Always be a child of Login;
-
 const warning = 'Unauthorized username or password, please sign in as guest or contact us';
-
 const LogInForm = (props) => (
     <Styles>
         <div className="Login">

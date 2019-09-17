@@ -1,10 +1,6 @@
-///WebGL Viewer Component/// 
-/*  This component contains the viewer portion of this application. 
-    Important functions 
-    1. A lifeCycle suite that puts everything inplace when it mounts (gets instantiated)
-    2. A CallBackLoadGLTF method that listens to GLTFLoader.js and puts in inanimate models 
-    3. A ReceiveAnimatedModel that is called when an animated model is loaded, loads the animation, and then plays */
-
+////
+// 已停用 可當 threejs viewer 範例
+////
 import React, { Component } from 'react';
 // 3rd party 
 import * as THREE from 'three'

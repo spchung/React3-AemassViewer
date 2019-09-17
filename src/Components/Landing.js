@@ -46,7 +46,7 @@ class LandingPage extends Component{
             return(
                 <div> 
                     <ModelContext.Provider value ={this.state}>
-                        <Navigation accessLevel = 'png'/>
+                        <Navigation/>
                         <Jumbotron/>   
                         <Gallery/>
                     </ModelContext.Provider>

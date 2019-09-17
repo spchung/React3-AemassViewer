@@ -2,15 +2,9 @@ import React, { Component } from 'react';
 //components 
 import LoginNav from './LoginNav';
 import LoginFormPres from './LoginFormPres';
-
 const apis = require('./../api.json');
 
-/// LocalStorage
-/// pair 1: ('isLoggedIn', BOOLEAN)
-/// pair 2: ('access', STRING(get from API response))
-
 //workflow: handleSubmit => getAccess => handleUnAuth => Auth? (show warning) : redirect to landing with access
-
 class LogIn extends Component {
     constructor(props) {
         super(props); 
@@ -46,10 +40,10 @@ class LogIn extends Component {
     handleSubmit = async (event) => {
         event.preventDefault();
         let accessLevel = await this.getAccess(this.state);
-        this.handleUnauthorizedUser(accessLevel);
+        this.handleAuthorization(accessLevel);
     }
 
-    handleUnauthorizedUser = (accessLevel) => {
+    handleAuthorization = (accessLevel) => {
         if (accessLevel === 'unAuthorized'){
             let warningBox =document.getElementById('warning');
             warningBox.hidden = false;
